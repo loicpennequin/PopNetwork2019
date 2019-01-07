@@ -4,6 +4,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './../../../webpack.config.js';
 import logger from './../logger';
 import express from 'express';
+import Loadable from 'react-loadable';
 
 async function build() {
     logger.debug('Building React app...');
@@ -23,7 +24,6 @@ async function build() {
                 publicPath: '/',
                 quiet: false,
                 stats: 'errors-only',
-                writeToDisk: true,
                 serverSideRender: true
             });
 
@@ -37,6 +37,9 @@ async function build() {
 
     webpackApp.use(instance);
     webpackApp.use(webpackHotMiddleware(compiler));
+
+    await Loadable.preloadAll();
+
     const port = parseInt(process.env.PORT, 10) + 1;
     webpackApp.listen(port, () => {
         console.log('webpack dev middleware listening on port ' + port);

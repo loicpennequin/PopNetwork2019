@@ -21,7 +21,7 @@ module.exports = env => ({
         app: entryPath(env)[env.NODE_ENV]
     },
     output: {
-        path: path.resolve(__dirname, '../../public/assets'),
+        path: path.resolve(__dirname, '../../public'),
         chunkFilename: '[name].js'
     },
     module: {

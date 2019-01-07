@@ -20,7 +20,7 @@ module.exports = env => {
             chunkFilename: "[name].0[id].css",
         }),
         new ReactLoadablePlugin({
-            filename: path.resolve(__dirname, '../../../public/assets/react-loadable.json')
+            filename: path.resolve(__dirname, '../../../public/react-loadable.json')
         }),
         isProd && new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
         isProd && new CompressionPlugin()

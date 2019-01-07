@@ -9,9 +9,14 @@ const plugins = require('./plugins/common.js');
 module.exports = env => ({
     mode: env.NODE_ENV,
     devtool: 'inline-source-maps',
+    resolve: {
+        alias: {
+            'react-dom': '@hot-loader/react-dom'
+        }
+    },
     output: {
         filename: '[name].js',
-        publicPath: '/assets/'
+        publicPath: '/'
     },
     module: {
         rules: loaders(env)

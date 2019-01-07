@@ -9,7 +9,7 @@ module.exports = env => [
         __PORT__: env.port
     }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|fr/),
-    new CleanWebpackPlugin(['public/assets', 'src/server/views'], {
+    new CleanWebpackPlugin(['public', 'src/server/views'], {
         root: path.join(__dirname, '../../../')
     })
 ];

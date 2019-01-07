@@ -107,7 +107,6 @@ class RESTResource {
     async _handleRoute(req, res, fn) {
         const data = await wrap(() => fn(req, res), this._handleError);
         const status = this._setStatus(req, data);
-        const ids = Array.isArray(data) ? data.map(x => x?.id) : [data?.id];
         logger.debug(`REST API RESPONSE - status: ${status}`);
         res.status(status).json(data);
     }
@@ -146,19 +145,19 @@ class RESTResource {
         next();
     }
 
-    get({ url, cb, isPrivate }) {
+    get(url, cb, isPrivate) {
         this_addRoute('get', url, isPrivate, cb);
     }
 
-    post({ url, cb, isPrivate }) {
+    post(url, cb, isPrivate) {
         this_addRoute('post', url, isPrivate, cb);
     }
 
-    delete({ url, cb, isPrivate }) {
+    delete(url, cb, isPrivate) {
         this_addRoute('delete', url, isPrivate, cb);
     }
 
-    put({ url, cb, isPrivate }) {
+    put(url, cb, isPrivate) {
         this_addRoute('put', url, isPrivate, cb);
     }
 
