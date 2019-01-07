@@ -32,6 +32,7 @@ module.exports = env => ({
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
+            chunks: 'all',
             cacheGroups: {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,

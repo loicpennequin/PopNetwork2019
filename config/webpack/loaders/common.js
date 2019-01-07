@@ -1,4 +1,4 @@
-module.exports =  env => [
+module.exports = env => [
     {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -10,7 +10,7 @@ module.exports =  env => [
                         '@babel/preset-env',
                         {
                             useBuiltIns: 'usage',
-                            targets: 'last 2 versions, not dead'
+                            targets: 'last 2 versions'
                         }
                     ],
                     '@babel/preset-react'
@@ -21,8 +21,10 @@ module.exports =  env => [
                     '@babel/plugin-transform-react-jsx',
                     ['@babel/plugin-proposal-decorators', { legacy: true }],
                     '@babel/plugin-syntax-dynamic-import',
-                    '@babel/plugin-proposal-export-default-from',
-                    ['@babel/plugin-proposal-class-properties', { loose: false }],
+                    [
+                        '@babel/plugin-proposal-class-properties',
+                        { loose: false }
+                    ],
                     '@babel/plugin-proposal-object-rest-spread',
                     '@babel/plugin-transform-react-constant-elements',
                     'react-loadable/babel',
@@ -44,6 +46,7 @@ module.exports =  env => [
                         }
                     ]
                 ],
+                babelrc: false,
                 cacheDirectory: true
             }
         }
@@ -59,9 +62,9 @@ module.exports =  env => [
                 }
             }
         ]
-    },
+    }
     // {
     //     test: /locales/,
     //     loader: '@alienfast/i18next-loader'
     // }
-]
+];

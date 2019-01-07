@@ -2,6 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import logger from './../logger';
 import isObject from 'is-object';
+import path from 'path';
 
 import template from './template.js';
 import build from './webpack.js';
@@ -30,13 +31,20 @@ class ReactRenderer {
 
     async render(req, res) {
         //@TODO: handle initialState fetching
+        const appPath = path.resolve(
+            __dirname,
+            '../../client/components/App.js'
+        );
+        if (process.env.NODE_ENV === 'development') {
+            delete require.cache[appPath];
+        }
+        const { default: App } = await import(appPath);
+
         const modules = [];
         const assets = this._getAssets(res.locals);
         const routes = [];
         const markup = renderToString(
-            <Loadable.Capture
-                report={moduleName => modules.push(moduleName)}
-            >
+            <Loadable.Capture report={moduleName => modules.push(moduleName)}>
                 <App location={req.url} context={{}} routes={routes} />
                 {/* // initialData: initialData, */}
             </Loadable.Capture>
@@ -54,9 +62,7 @@ class ReactRenderer {
 
         const assetsByChunkName = webpackStats.toJson().assetsByChunkName;
         const outputPath = webpackStats.toJson().outputPath;
-        const normalizedAssets = normalizeAssets(
-            assetsByChunkName['app']
-        );
+        const normalizedAssets = normalizeAssets(assetsByChunkName['app']);
         return {
             css: normalizedAssets
                 .filter(path => path.endsWith('.css'))

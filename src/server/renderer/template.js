@@ -11,7 +11,8 @@ const template = async (markup, assets, modules) => {
         .join('\n');
 
     const initialData = {};
-
+    console.log(loadables);
+    console.log(assets.js);
     return `<!DOCTYPE html>
         <html>
             <head>

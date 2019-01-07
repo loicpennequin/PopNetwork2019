@@ -21,7 +21,8 @@ async function build() {
 
             instance = webpackDevMiddleware(compiler, {
                 publicPath: '/',
-                serverSideRender: true
+                serverSideRender: true,
+                stats: 'minimal'
             });
 
             instance.waitUntilValid(() => {
