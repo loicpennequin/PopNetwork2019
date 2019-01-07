@@ -1,4 +1,5 @@
-import cfg from './cfg.js';
-import env from './env.js';
+const cfg = require('./cfg.js');
+const env = require('./env.js');
 
-export { cfg, env };
+exports.cfg = cfg;
+exports.env = env;

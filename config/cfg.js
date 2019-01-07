@@ -18,4 +18,4 @@ const cfg = Object.freeze({
     })
 });
 
-export default cfg;
+module.exports = cfg;

@@ -2,11 +2,14 @@ import path from 'path';
 import { getBundles } from 'react-loadable/webpack';
 
 const template = async (markup, assets, modules) => {
-    // const stats = await import(path.resolve(
-    //     __dirname,
-    //     './../../../../../../public/assets/react-loadable.json'
-    // ));
-    // const bundles = getBundles(stats, modules);
+    const stats = await import(path.resolve(
+        __dirname,
+        './../../../public/react-loadable.json'
+    ));
+    const loadables = getBundles(stats, modules)
+        .map(bundle => `<script src="${bundle.file}"></script>`)
+        .join('\n');
+
     const initialData = {};
 
     return `<!DOCTYPE html>
@@ -18,8 +21,8 @@ const template = async (markup, assets, modules) => {
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
                 <link rel="manifest" href="/assets/manifest.json">
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">-->
-                <link href="https://fonts.googleapis.com/css?family=Poiret+One|Lora:400,400i,700|Roboto:400,700" rel="stylesheet">
+                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+                <link href="https://fonts.googleapis.com/css?family=Poiret+One|Lora:400,400i,700|Roboto:400,700" rel="stylesheet">-->
                 <title>Pop Network</title>
                 ${assets.css}
             </head>
@@ -30,6 +33,7 @@ const template = async (markup, assets, modules) => {
                 )};</script>
                 <script src="runtime.js"></script>
                 <script src="vendors.js"></script>
+                ${loadables}
                 ${assets.js}
             </body>
         </html>`;

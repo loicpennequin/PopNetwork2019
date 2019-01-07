@@ -20,10 +20,7 @@ async function build() {
             );
 
             instance = webpackDevMiddleware(compiler, {
-                noInfo: false,
                 publicPath: '/',
-                quiet: false,
-                stats: 'errors-only',
                 serverSideRender: true
             });
 

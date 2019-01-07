@@ -63,6 +63,10 @@ app.start = async (port = 8000, onListen) => {
     ====================================================*/
     if (process.env.NODE_ENV === 'development') {
         await Renderer.build(app);
+    } else {
+        app.get('/', (req, res) => {
+            Renderer.render();
+        })
     }
 
     /*====================================================

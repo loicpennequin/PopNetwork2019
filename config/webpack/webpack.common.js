@@ -22,7 +22,7 @@ module.exports = env => ({
         rules: loaders(env)
     },
     plugins: plugins(env),
-    stats: 'verbose',
+    stats: 'minimal',
     resolve: {
         alias: {
             'react-dom': '@hot-loader/react-dom'

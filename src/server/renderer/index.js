@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderToString } from '@hot-loader/react-dom/server';
+import { renderToString } from 'react-dom/server';
 import logger from './../logger';
 import isObject from 'is-object';
 
@@ -23,11 +23,13 @@ class ReactRenderer {
     async build(app) {
         logger.debug('ReactRenderer.build()');
         const webpackApp = await build();
+        //@TODO : handle routing
         webpackApp.get('/', this.render.bind(this));
         app.use(webpackApp);
     }
 
     async render(req, res) {
+        //@TODO: handle initialState fetching
         const modules = [];
         const assets = this._getAssets(res.locals);
         const routes = [];
