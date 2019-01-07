@@ -18,7 +18,14 @@ import session from 'express-session';
 import AuthService from './auth';
 import RestService from './persistence';
 import WebsocketService from './websockets';
-import user from './user';
+import Renderer from './renderer';
+
+import user from './_user';
+import comment from './_comment';
+import friendship from './_friendship';
+import message from './_message';
+import post from './_post';
+import publication from './_publication';
 
 /*====================================================
 Init Express App
@@ -26,47 +33,59 @@ Init Express App
 const app = express();
 const server = http.createServer(app);
 
-/*====================================================
-App configuration
-====================================================*/
-app.disable('x-powered-by');
-app.use(helmet());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.SESSION_SECRET));
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true
-    })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static('public'));
-
-/*====================================================
-Authentication configuration
-====================================================*/
-AuthService.addStrategy('local').start(app);
-
-/*====================================================
-REST Modules
-====================================================*/
-user();
-RestService.start(app);
-
-/*====================================================
-Websockets
-====================================================*/
-WebsocketService.start(server);
-
 /**
  * Starts the server
  * @param {number} port - the port to start the server on
  * @callback onListen
  */
-app.start = (port = 8000, onListen) => {
+app.start = async (port = 8000, onListen) => {
+    /*====================================================
+    App configuration
+    ====================================================*/
+    app.disable('x-powered-by');
+    app.use(helmet());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser(process.env.SESSION_SECRET));
+    app.use(
+        session({
+            secret: process.env.SESSION_SECRET,
+            resave: false,
+            saveUninitialized: true
+        })
+    );
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(express.static('public'));
+
+    /*====================================================
+    Renderer configuration
+    ====================================================*/
+    if (process.env.NODE_ENV === 'development') {
+        await Renderer.build(app);
+    }
+
+    /*====================================================
+    Authentication configuration
+    ====================================================*/
+    AuthService.addStrategy('local').start(app);
+
+    /*====================================================
+    REST Modules
+    ====================================================*/
+    comment();
+    friendship();
+    message();
+    post();
+    publication();
+    user();
+    RestService.start(app);
+
+    /*====================================================
+    Websockets
+    ====================================================*/
+    WebsocketService.start(server);
+
     server.listen(port, () => {
         onListen();
     });

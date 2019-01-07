@@ -35,7 +35,7 @@ class AuthService {
 
     addStrategy(strategy, config) {
         if (!STRATEGIES[strategy]) {
-            logger.error(`============AUTHENTICATION API ERROR`);
+            logger.error(`===========AUTHENTICATION ERROR`);
             logger.error(`This strategy is not supported yet. Please chose one of :
 ${Object.keys(STRATEGIES).reduce((str, key) => str + `_${key}\n`, '')}`);
             return this;

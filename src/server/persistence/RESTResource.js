@@ -14,7 +14,8 @@ const DEFAULT_OPTIONS = {
     create: {},
     destroy: { require: true },
     update: {},
-    isPrivateRoutes: []
+    isPrivateRoutes: [],
+    exclude: []
 };
 
 class RESTResource {
@@ -23,7 +24,7 @@ class RESTResource {
         bookshelf
     ) {
         Object.assign(this, { name, urlPath });
-        this.options = Object.assign(DEFAULT_OPTIONS, options);
+        this.options = Object.assign({}, DEFAULT_OPTIONS, options);
         this.model = new RESTModel(model, this.name, bookshelf);
         this.controller = new RESTController(
             controller,
@@ -39,29 +40,68 @@ class RESTResource {
     }
 
     _setupRoutes() {
+        logger.debug(
+            `===========CREATING DEFAULT ROUTES FOR Rest Resource ${this.name.toUpperCase()}`
+        );
         this.router.options('/', cors(this.corsOptions));
         this.router.options('/:id', cors(this.corsOptions));
-        const isPrivate = route =>
-            this.options.privateRoutes.indexOf(route) !== -1;
 
-        this._addRoute('get', '/', isPrivate('findAll'), async (req, res) =>
-            this.controller.findAll(req.query)
+        const isPrivate = key =>
+            this.options.privateRoutes.indexOf(key) !== -1 ||
+            this.options.privateRoutes.indexOf('all') !== -1;
+
+        const isExclude = key =>
+            this.options.exclude.indexOf(key) !== -1 ||
+            this.options.exclude.indexOf('all') !== -1;
+
+        if (!isExclude('findAll')) {
+            this._addRoute('get', '/', isPrivate('findAll'), async (req, res) =>
+                this.controller.findAll(req.query)
+            );
+        }
+        if (!isExclude('findById')) {
+            this._addRoute('get', '/:id', isPrivate('find'), async (req, res) =>
+                this.controller.findById(req.params.id)
+            );
+        }
+        if (!isExclude('create')) {
+            this._addRoute('post', '/', isPrivate('create'), async (req, res) =>
+                this.controller.create(req.body)
+            );
+        }
+        if (!isExclude('destroy')) {
+            this._addRoute(
+                'delete',
+                '/:id',
+                isPrivate('destroy'),
+                async (req, res) => this.controller.destroy(req.params.id)
+            );
+        }
+        if (!isExclude('update')) {
+            this._addRoute(
+                'put',
+                '/:id',
+                isPrivate('update'),
+                async (req, res) =>
+                    this.controller.update(req.params.id, req.body)
+            );
+        }
+    }
+
+    _addRoute(type, url, isPrivate, cb) {
+        logger.debug(
+            `Creating Rest Resource route : ${type.toUpperCase()} - ${
+                this.urlPath
+            }${url} - ${isPrivate ? 'private' : 'public'}`
         );
-        this._addRoute('get', '/:id', isPrivate('find'), async (req, res) =>
-            this.controller.findById(req.params.id)
-        );
-        this._addRoute('post', '/', isPrivate('create'), async (req, res) =>
-            this.controller.create(req.body)
-        );
-        this._addRoute(
-            'delete',
-            '/:id',
-            isPrivate('destroy'),
-            async (req, res) => this.controller.destroy(req.params.id)
-        );
-        this._addRoute('put', '/:id', isPrivate('update'), async (req, res) =>
-            this.controller.update(req.params.id, req.body)
-        );
+
+        this.router[type](url, [this.middlewares], (req, res) => {
+            if (isPrivate && !req.isAuthenticated()) {
+                res.status(401).send('Unauthorized');
+            } else {
+                this._handleRoute(req, res, cb);
+            }
+        });
     }
 
     async _handleRoute(req, res, fn) {
@@ -95,26 +135,10 @@ class RESTResource {
         if (e.message === 'EmptyResponse') {
             return null;
         } else {
-            logger.error(`============REST API ERROR`);
+            logger.error(`===========REST API ERROR`);
             logger.error(e.stack);
             return e;
         }
-    }
-
-    _addRoute(type, url, isPrivate, cb) {
-        logger.debug(
-            `RESTResource._addRoute() : ${type.toUpperCase()} - ${
-                this.urlPath
-            }${url} - ${isPrivate ? 'private' : 'public'}`
-        );
-
-        this.router[type](url, [this.middlewares], (req, res) => {
-            if (isPrivate && !req.isAuthenticated()) {
-                res.status(401).send('Unauthorized');
-            } else {
-                this._handleRoute(req, res, cb);
-            }
-        });
     }
 
     _logRequest(req, res, next) {
@@ -142,7 +166,7 @@ class RESTResource {
         this.app.use(this._logRequest);
         this.app.use(this.urlPath, this.router);
         app.use(cfg.REST.API_PATH, this.app);
-        logger.debug(`${this.name} REST Resource initialized`);
+        logger.debug(`- ${this.name} REST Resource started`);
     }
 }
 

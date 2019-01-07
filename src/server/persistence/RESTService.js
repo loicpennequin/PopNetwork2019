@@ -32,10 +32,11 @@ class RestService {
     }
 
     start(app) {
-        logger.debug('RESTService.start()');
+        logger.debug('===========STARTING REST RESOURCES');
         Object.values(this.resources).forEach(resource => {
             resource.start(app);
         });
+        logger.debug('===========REST RESOURCES STARTED');
     }
     // endpoints = () =>
     //     Object.entries(this.resources).reduce(

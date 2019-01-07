@@ -1,0 +1,12 @@
+{
+    "restartable": "rs",
+    "ignore": [
+        ".git",
+        "node_modules",
+        "src/client/**/*",
+        "src/server/views/**/*",
+        "public/**/*",
+        "tools/**/*",
+        "test"
+    ]
+}
