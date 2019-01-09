@@ -22,7 +22,8 @@ async function build() {
             instance = webpackDevMiddleware(compiler, {
                 publicPath: '/',
                 serverSideRender: true,
-                stats: 'minimal'
+                stats: 'minimal',
+                writeToDisk: filePath => filePath.endsWith('ssr.js')
             });
 
             instance.waitUntilValid(() => {

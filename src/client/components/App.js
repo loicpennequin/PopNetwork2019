@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import Loadable from 'react-loadable';
+import { Provider } from './Store';
+import Test from './test.js';
 
-function Loading() {
-    return <div>Loading...</div>;
-}
-
-const Test = Loadable({
-    modules: ['./TestLoadable.js'],
-    webpack: () => [require.resolveWeak('./TestLoadable.js')],
-    loader: () => import(/* webpackChunkName: "test" */ './TestLoadable.js'),
-    loading: Loading
-});
-
-const App = () => {
-    const onClick = () => {
-        console.log('onclick');
-    };
-    const [showloadable, setShowloadable] = useState(false);
-    return (
-        <>
-            <button onClick={() => setShowloadable(true)}>
-                Show loadable component
-            </button>
-            {showloadable && <Test />}
-        </>
-    );
+const store = {
+    greeter : 'Hello',
+    name: 'Daria',
+    setName : name  => state => ({name})
 };
+
+const App = () => (
+    <Provider {...store}>
+        <Test/>
+    </Provider>
+);
 
 export default hot(App);

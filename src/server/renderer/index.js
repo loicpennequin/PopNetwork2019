@@ -33,13 +33,13 @@ class ReactRenderer {
         //@TODO: handle initialState fetching
         const appPath = path.resolve(
             __dirname,
-            '../../client/components/App.js'
+            './../views/app.ssr.js'
         );
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[appPath];
         }
-        const { default: App } = await import(appPath);
-
+        const { default: App } = require(appPath);
+        console.log(App);
         const modules = [];
         const assets = this._getAssets(res.locals);
         const routes = [];
@@ -59,8 +59,7 @@ class ReactRenderer {
             }
             return Array.isArray(assets) ? assets : [assets];
         }
-
-        const assetsByChunkName = webpackStats.toJson().assetsByChunkName;
+        const assetsByChunkName = webpackStats.toJson().children[0].assetsByChunkName;
         const outputPath = webpackStats.toJson().outputPath;
         const normalizedAssets = normalizeAssets(assetsByChunkName['app']);
         return {
