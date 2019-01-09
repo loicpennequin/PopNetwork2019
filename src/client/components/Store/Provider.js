@@ -1,9 +1,11 @@
 // store/UserProvider.js
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, memo } from "react";
 
 export const StoreContext = createContext({});
 
 let _state = {};
+
+const RenderPure = memo(({children}) => children);
 
 const Provider = props => {
     const _setState = newState => {
@@ -13,7 +15,7 @@ const Provider = props => {
     const getState = () => _state;
 
     const [state, setState] = useState(_state);
-    let [initialized, setInitialized] = useState(false);
+    const [initialized, setInitialized] = useState(false);
     if (!initialized) {
 
         const stateUpdateFns = Object.entries(props)
@@ -36,7 +38,9 @@ const Provider = props => {
     }
     return (
         <StoreContext.Provider value={state}>
-            {props.children}
+            <RenderPure>
+                {props.children}
+            </RenderPure>
         </StoreContext.Provider>
     );
 };

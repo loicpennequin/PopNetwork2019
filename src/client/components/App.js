@@ -10,10 +10,15 @@ const store = {
     setName : name  => state => ({name})
 };
 
-const App = () => (
-    <Provider {...store}>
-        <Test/>
-    </Provider>
-);
+const Body = () => <p>Body</p>
 
+const App = () => {
+    Test.foo();
+    return (
+        <Provider {...store}>
+            <Test color="red"/>
+            <Body/>
+        </Provider>
+    );
+}
 export default hot(App);

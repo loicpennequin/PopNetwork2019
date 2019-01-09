@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { subscribe } from './Store';
 
-const Test = props => {
-    return (
-        <>
-            <h1>{props.greeter} {props.name}</h1>
-            <button onClick={() => props.setName('Toto')}>test</button>
-        </>
-    )
+class Test extends Component{
+    static foo(){
+        console.log('foo')
+    }
+    render(){
+        const { greeter, name, setName, color } = this.props;
+        return (
+            <>
+                <h1 style={{color: color}}>{greeter} {name}</h1>
+                <button onClick={() => setName('Toto')}>test</button>
+            </>
+        )
+    }
 }
-
 
 export default subscribe()(Test);
