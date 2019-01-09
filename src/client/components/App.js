@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import Loadable from 'react-loadable';
-import { Provider } from './Store';
+import { Provider } from 'daria-store';
 import Test from './test.js';
 
 const store = {
-    greeter : 'Hello',
+    greeter: 'Hello',
     name: 'Daria',
-    setName : name  => state => ({name})
+    setName: name => state => ({ name })
 };
 
 const App = () => (
     <Provider {...store}>
-        <Test/>
+        <Test />
     </Provider>
 );
 

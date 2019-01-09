@@ -13,7 +13,10 @@ module.exports = env => ({
     resolve: {
         alias: {
             'react-dom': '@hot-loader/react-dom',
-            'react-contextual': path.resolve(__dirname, './../../tools/forks/react-contextual')
+            'daria-store': path.resolve(
+                __dirname,
+                './../../src/client/components/Store'
+            )
         }
     },
     output: {
@@ -24,10 +27,5 @@ module.exports = env => ({
         rules: loaders(env)
     },
     plugins: plugins(env),
-    stats: 'minimal',
-    resolve: {
-        alias: {
-            'react-dom': '@hot-loader/react-dom'
-        }
-    }
+    stats: 'minimal'
 });
