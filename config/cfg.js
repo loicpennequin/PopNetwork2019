@@ -1,4 +1,9 @@
+const path = require('path');
+
 const cfg = Object.freeze({
+    APP: Object.freeze({
+        SSR_BUNDLE__PATH: path.resolve(__dirname, './../src/server/views/app.ssr.js')
+    }),
     LOGGER: Object.freeze({
         DIR: 'logs',
         FORMAT: printf => printf(info => `${info.level}: ${info.message}`)

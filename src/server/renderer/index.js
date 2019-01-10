@@ -2,14 +2,14 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import logger from './../logger';
 import isObject from 'is-object';
-import path from 'path';
-
+import { cfg } from './../../../config';
 import template from './template.js';
 import build from './webpack.js';
 import Loadable from 'react-loadable';
 
 class ReactRenderer {
     constructor() {
+        this.appPath = cfg.APP.SSR_BUNDLE__PATH;
         // config.routes.forEach(route => {
         //     this.app.get(
         //         route.path,
@@ -20,31 +20,34 @@ class ReactRenderer {
     }
 
     async build(app) {
-        logger.debug('ReactRenderer.build()');
+        logger.debug('================BUILDING REACT APP');
         const webpackApp = await build();
-        //@TODO : handle routing
+        logger.debug('================REACT APP BUILD SUCCESSFUL');
+        // @TODO : handle client-side routes
         webpackApp.get('/', this.render.bind(this));
         app.use(webpackApp);
     }
 
     async render(req, res) {
-        //@TODO: handle initialState fetching
-        const appPath = path.resolve(__dirname, './../views/app.ssr.js');
+        // @TODO: handle initialState fetching
+        // @TODO : handle client-side routes
+        // @TODO: redirect if route is protected and request isn't authenticated
+
         if (process.env.NODE_ENV === 'development') {
-            delete require.cache[appPath];
+            delete require.cache[this.appPath];
         }
-        const { default: App } = require(appPath);
-        console.log(App);
-        const modules = [];
+
+        const { default: App } = require(this.appPath);
         const assets = this._getAssets(res.locals);
         const routes = [];
+        const loadables = [];
         const markup = renderToString(
-            <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+            <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
                 <App location={req.url} context={{}} routes={routes} />
                 {/* // initialData: initialData, */}
             </Loadable.Capture>
         );
-        res.send(await template(markup, assets, modules));
+        res.send(await template(markup, assets, loadables));
     }
 
     _getAssets({ webpackStats, fs }) {
@@ -68,15 +71,6 @@ class ReactRenderer {
                 .map(path => `<script src="${path}"></script>`)
                 .join('\n')
         };
-        //
-        // return {
-        //     css: `<link rel="stylesheet" href="/assets/${
-        //         this.config.namespace
-        //     }.css">`,
-        //     js: `<script src="/assets/runtime.js"></script>\n<script src="/assets/vendors.js"></script>\n<script src="/assets/${
-        //         this.config.namespace
-        //     }.js"></script>`
-        // };
     }
 }
 

@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import Loadable from 'react-loadable';
 import { Provider } from 'daria-store';
-import Test from './test.js';
+import { BrowserRouter , StaticRouter, Link } from 'react-router-dom';
+import store from './../store';
+import AppRoutes from 'components/Routes/AppRoutes.js';
+import pages from './../pages';
 
-const store = {
-    greeter: 'Hello',
-    name: 'Daria',
-    setName: name => state => ({ name })
-};
+const Router = __IS_BROWSER__ ? BrowserRouter : StaticRouter;
 
-const Body = () => <p>Body</p>
+const App = props => (
+    <Provider {...store}>
+        <Router location={props.location} context={{}}>
+            <div>
+                <nav>{pages.map(page => <Link to={page.path}>{page.pageName}</Link>)}</nav>
+                <AppRoutes/>
+            </div>
+        </Router>
+    </Provider>
+);
 
-const App = () => {
-    Test.foo();
-    return (
-        <Provider {...store}>
-            <Test color="red"/>
-            <Body/>
-        </Provider>
-    );
-}
 export default hot(App);

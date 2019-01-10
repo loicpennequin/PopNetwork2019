@@ -2,12 +2,10 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './../../../webpack.config.js';
-import logger from './../logger';
 import express from 'express';
 import Loadable from 'react-loadable';
 
 async function build() {
-    logger.debug('Building React app...');
     const webpackApp = express();
     let instance, compiler;
     const _build = () =>
@@ -27,7 +25,6 @@ async function build() {
             });
 
             instance.waitUntilValid(() => {
-                console.log('React app build done.');
                 resolve();
             });
         });

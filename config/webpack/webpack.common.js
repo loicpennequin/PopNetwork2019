@@ -16,7 +16,19 @@ module.exports = env => ({
             'daria-store': path.resolve(
                 __dirname,
                 './../../src/client/components/Store'
-            )
+            ),
+            'components': path.resolve(
+                __dirname,
+                './../../src/client/components'
+            ),
+            'resources': path.resolve(
+                __dirname,
+                './../../src/client/resources'
+            ),
+            'pages': path.resolve(
+                __dirname,
+                './../../src/client/pages'
+            ),
         }
     },
     output: {

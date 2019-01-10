@@ -1,5 +1,5 @@
 // store/UserProvider.js
-import React, { createContext, useState, memo } from "react";
+import React, { createContext, useState, useEffect, memo } from "react";
 
 export const StoreContext = createContext({});
 
@@ -16,10 +16,6 @@ const Provider = props => {
         setState(_state);
     }
     const getState = () => _state;
-
-    const [state, setState] = useState(_state);
-    const [initialized, setInitialized] = useState(false);
-    if (!initialized) {
 
     const makeStore = () => {
         const stateUpdateFns = Object.entries(props)
