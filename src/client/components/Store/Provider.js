@@ -1,5 +1,5 @@
 // store/UserProvider.js
-import React, { createContext, useState, useEffect, memo } from "react";
+import React, { createContext, useState, useEffect, memo } from 'react';
 
 export const StoreContext = createContext({});
 
@@ -10,7 +10,7 @@ const RenderPure = memo(({ children }) => children);
 
 const Provider = props => {
     const [state, setState] = useState(_state);
-
+    const [initialized, setInitialized] = useState(false);
     const _setState = newState => {
         _state = { ..._state, ...newState };
         setState(_state);
@@ -36,10 +36,11 @@ const Provider = props => {
             setState: newState => _setState(newState)
         };
         _setState(initialState);
+        setInitialized(true);
     };
-
     useEffect(() => makeStore(), []);
-    return (
+    // @FIXME probably not working with SSR. Needs fix later.
+    return !initialized ? null : (
         <StoreContext.Provider value={state}>
             <RenderPure>{props.children}</RenderPure>
         </StoreContext.Provider>

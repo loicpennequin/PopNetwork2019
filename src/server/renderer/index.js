@@ -7,6 +7,7 @@ import { cfg } from './../../../config';
 import template from './template.js';
 import build from './webpack.js';
 import Loadable from 'react-loadable';
+import prefetcher from './prefetcher.js';
 
 class ReactRenderer {
     constructor() {
@@ -40,16 +41,23 @@ class ReactRenderer {
         const assets = this._getAssets(res.locals);
         const routes = [];
         const loadables = [];
+        const { pageConfig } = this._getRouteMatches(req)[0];
+        const initialData = await this._prefetch(pageConfig.name, req);
         const markup = renderToString(
             <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
-                <App location={req.url} context={{}} routes={routes} />
-                {/* // initialData: initialData, */}
+                <App
+                    location={req.url}
+                    context={{}}
+                    routes={routes}
+                    initialData={initialData}
+                />
             </Loadable.Capture>
         );
-        res.send(await template(markup, assets, loadables));
+        res.send(await template(markup, assets, loadables, initialData));
     }
 
     _getSSRBundle() {
+        // @FIXME : still a problem bien require cache even when doing this.
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[this.appPath];
         }
@@ -76,6 +84,11 @@ class ReactRenderer {
         } else {
             next();
         }
+    }
+
+    async _prefetch(key, req) {
+        const noop = () => ({});
+        return await (prefetcher[key] || noop)(req);
     }
 
     _getAssets({ webpackStats, fs }) {

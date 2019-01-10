@@ -17,18 +17,16 @@ module.exports = env => ({
                 __dirname,
                 './../../src/client/components/Store'
             ),
-            'components': path.resolve(
+            components: path.resolve(
                 __dirname,
                 './../../src/client/components'
             ),
-            'resources': path.resolve(
+            constants: path.resolve(
                 __dirname,
-                './../../src/client/resources'
+                './../../src/client/resources/constants.js'
             ),
-            'pages': path.resolve(
-                __dirname,
-                './../../src/client/pages'
-            ),
+            resources: path.resolve(__dirname, './../../src/client/resources'),
+            pages: path.resolve(__dirname, './../../src/client/pages')
         }
     },
     output: {

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { subscribe } from 'daria-store';
 
-@subscribe()
+function mapStoreToProps(store) {
+    return {
+        authenticated: store.authenticated
+    };
+}
+
+@subscribe(mapStoreToProps)
 class Home extends Component {
     static pageConfig = {
         name: 'Home',
@@ -11,7 +17,9 @@ class Home extends Component {
     };
 
     render() {
-        return <div>I am the Home !</div>;
+        const { authenticated } = this.props;
+
+        return <div>You are {authenticated ? '' : 'not'} logged in !</div>;
     }
 }
 

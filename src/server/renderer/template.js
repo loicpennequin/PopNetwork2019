@@ -1,7 +1,7 @@
 import path from 'path';
 import { getBundles } from 'react-loadable/webpack';
 
-const template = async (markup, assets, modules) => {
+const template = async (markup, assets, modules, initialData) => {
     const stats = await import(path.resolve(
         __dirname,
         './../../../public/react-loadable.json'
@@ -10,7 +10,6 @@ const template = async (markup, assets, modules) => {
         .map(bundle => `<script src="${bundle.file}"></script>`)
         .join('\n');
 
-    const initialData = {};
     return `<!DOCTYPE html>
         <html>
             <head>
