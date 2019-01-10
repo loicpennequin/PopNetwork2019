@@ -5,7 +5,7 @@ class TestPage extends Component {
         name: 'TestPage',
         path : '/test',
         exact: true,
-        authLevel: 'private'
+        authLevel: 'public'
     }
 
     render() {

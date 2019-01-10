@@ -21,3 +21,5 @@ const App = props => (
 );
 
 export default hot(App);
+
+export { pages };

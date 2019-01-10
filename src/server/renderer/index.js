@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { matchPath } from 'react-router-dom';
 import logger from './../logger';
 import isObject from 'is-object';
 import { cfg } from './../../../config';
@@ -10,13 +11,6 @@ import Loadable from 'react-loadable';
 class ReactRenderer {
     constructor() {
         this.appPath = cfg.APP.SSR_BUNDLE__PATH;
-        // config.routes.forEach(route => {
-        //     this.app.get(
-        //         route.path,
-        //         async (req, res) => await this.render(req, res)
-        //     );
-        // });
-        // this.config = config;
     }
 
     async build(app) {
@@ -26,28 +20,61 @@ class ReactRenderer {
         // @TODO : handle client-side routes
         webpackApp.get('/', this.render.bind(this));
         app.use(webpackApp);
+
+        // @TODO: do this elsewhere. Maybe in constructor by passing the main app as a parameter;
+        const { pages } = require(this.appPath);
+        pages.forEach(page => {
+            app.get(
+                page.pageConfig.path,
+                async (req, res) => await this.render(req, res)
+            );
+        })
     }
 
     async render(req, res) {
         // @TODO: handle initialState fetching
-        // @TODO : handle client-side routes
-        // @TODO: redirect if route is protected and request isn't authenticated
 
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[this.appPath];
         }
 
-        const { default: App } = require(this.appPath);
-        const assets = this._getAssets(res.locals);
-        const routes = [];
-        const loadables = [];
-        const markup = renderToString(
-            <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
-                <App location={req.url} context={{}} routes={routes} />
-                {/* // initialData: initialData, */}
-            </Loadable.Capture>
-        );
-        res.send(await template(markup, assets, loadables));
+        const { default: App, pages } = require(this.appPath);
+
+        const routeMatches = pages.filter(page => matchPath(req.url, page.pageConfig));
+        const redirectPath = this._checkRedirect(req, routeMatches)
+        if (redirectPath) {
+            res.redirect(redirectPath);
+        } else {
+            const assets = this._getAssets(res.locals);
+            const routes = [];
+            const loadables = [];
+            const markup = renderToString(
+                <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
+                    <App location={req.url} context={{}} routes={routes} />
+                    {/* // initialData: initialData, */}
+                </Loadable.Capture>
+            );
+            res.send(await template(markup, assets, loadables));
+        }
+    }
+
+    _checkRedirect(req, matches){
+        const matchesConfig = matches
+            .map(match => match.pageConfig);
+
+        if (
+            matchesConfig.some(match => match.authLevel === 'private') &&
+            !req.isAuthenticated()
+        ) {
+            return ('/');
+        } else if (
+            matchesConfig.some(match => match.authLevel === 'public') &&
+            req.isAuthenticated()
+        ) {
+            return ('/dashboard');
+        } else {
+            return undefined;
+        }
     }
 
     _getAssets({ webpackStats, fs }) {
