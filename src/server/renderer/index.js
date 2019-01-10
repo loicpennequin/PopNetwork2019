@@ -8,8 +8,6 @@ import template from './template.js';
 import build from './webpack.js';
 import Loadable from 'react-loadable';
 
-import App from './../../client/components/App.js';
-
 class ReactRenderer {
     constructor() {
         // config.routes.forEach(route => {
@@ -31,10 +29,7 @@ class ReactRenderer {
 
     async render(req, res) {
         //@TODO: handle initialState fetching
-        const appPath = path.resolve(
-            __dirname,
-            './../views/app.ssr.js'
-        );
+        const appPath = path.resolve(__dirname, './../views/app.ssr.js');
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[appPath];
         }
@@ -59,7 +54,8 @@ class ReactRenderer {
             }
             return Array.isArray(assets) ? assets : [assets];
         }
-        const assetsByChunkName = webpackStats.toJson().children[0].assetsByChunkName;
+        const assetsByChunkName = webpackStats.toJson().children[0]
+            .assetsByChunkName;
         const outputPath = webpackStats.toJson().outputPath;
         const normalizedAssets = normalizeAssets(assetsByChunkName['app']);
         return {

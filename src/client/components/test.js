@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { subscribe } from './Store';
+import { subscribe } from 'daria-store';
 
 class Test extends Component{
     static foo(){

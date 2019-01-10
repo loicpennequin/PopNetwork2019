@@ -17,6 +17,7 @@
     "license": "ISC",
     "dependencies": {
         "@hot-loader/react-dom": "16.7.0-alpha.2",
+        "babel-plugin-webpack-alias": "^2.1.2",
         "bcrypt": "^3.0.3",
         "bookshelf": "^0.14.2",
         "bookshelf-bcrypt": "^3.0.2",
@@ -25,7 +26,6 @@
         "cors": "^2.8.5",
         "dotenv": "^6.2.0",
         "express": "^4.16.4",
-        "express-list-endpoints": "^4.0.0",
         "express-session": "^1.15.6",
         "helmet": "^3.15.0",
         "hoist-non-react-statics": "^3.2.1",
@@ -43,7 +43,6 @@
         "react-router-dom": "^4.3.1",
         "socket.io": "^2.2.0",
         "socket.io-client": "^2.2.0",
-        "webpack-node-externals": "^1.7.2",
         "winston": "^3.1.0"
     },
     "devDependencies": {
@@ -89,6 +88,7 @@
         "webpack-dev-middleware": "^3.5.0",
         "webpack-hot-middleware": "^2.24.3",
         "webpack-manifest-plugin": "^2.0.4",
+        "webpack-node-externals": "^1.7.2",
         "webpack-merge": "^4.1.5"
     }
 }

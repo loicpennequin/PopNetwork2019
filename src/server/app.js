@@ -66,7 +66,7 @@ app.start = async (port = 8000, onListen) => {
     } else {
         app.get('/', (req, res) => {
             Renderer.render();
-        })
+        });
     }
 
     /*====================================================
