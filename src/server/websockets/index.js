@@ -24,7 +24,7 @@ class WebsocketService {
     }
 
     start(server) {
-        logger.debug('================STARTING WEBSOCKETS SERVICE');
+        logger.debug('===========STARTING WEBSOCKETS SERVICE');
         this.io = socketio.listen(server);
         this.io.on('connection', this._onConnect.bind(this));
     }

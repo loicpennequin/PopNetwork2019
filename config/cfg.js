@@ -2,7 +2,10 @@ const path = require('path');
 
 const cfg = Object.freeze({
     APP: Object.freeze({
-        SSR_BUNDLE__PATH: path.resolve(__dirname, './../src/server/views/app.ssr.js')
+        SSR_BUNDLE__PATH: path.resolve(
+            __dirname,
+            './../src/server/views/app.ssr.js'
+        )
     }),
     LOGGER: Object.freeze({
         DIR: 'logs',
@@ -10,7 +13,9 @@ const cfg = Object.freeze({
     }),
     AUTH: Object.freeze({
         MODELNAME: 'User',
-        PATH: '/auth'
+        PATH: '/auth',
+        PRIVATE_REDIRECT_PATH: '/',
+        PUBLIC_REDIRECT_PATH: '/dashboard'
     }),
     CORS: Object.freeze({
         origin: true,

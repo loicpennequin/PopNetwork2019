@@ -14,9 +14,9 @@ class ReactRenderer {
     }
 
     async build(app) {
-        logger.debug('================BUILDING REACT APP');
+        logger.debug('===========BUILDING REACT APP');
         const webpackApp = await build();
-        logger.debug('================REACT APP BUILD SUCCESSFUL');
+        logger.debug('===========REACT APP BUILD SUCCESSFUL');
         // @TODO : handle client-side routes
         webpackApp.get('/', this.render.bind(this));
         app.use(webpackApp);
@@ -26,54 +26,55 @@ class ReactRenderer {
         pages.forEach(page => {
             app.get(
                 page.pageConfig.path,
+                this._handleRedirect.bind(this),
                 async (req, res) => await this.render(req, res)
             );
-        })
+        });
     }
 
     async render(req, res) {
         // @TODO: handle initialState fetching
 
+        const { default: App, pages } = require(this.appPath);
+
+        const assets = this._getAssets(res.locals);
+        const routes = [];
+        const loadables = [];
+        const markup = renderToString(
+            <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
+                <App location={req.url} context={{}} routes={routes} />
+                {/* // initialData: initialData, */}
+            </Loadable.Capture>
+        );
+        res.send(await template(markup, assets, loadables));
+    }
+
+    _getSSRBundle() {
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[this.appPath];
         }
-
-        const { default: App, pages } = require(this.appPath);
-
-        const routeMatches = pages.filter(page => matchPath(req.url, page.pageConfig));
-        const redirectPath = this._checkRedirect(req, routeMatches)
-        if (redirectPath) {
-            res.redirect(redirectPath);
-        } else {
-            const assets = this._getAssets(res.locals);
-            const routes = [];
-            const loadables = [];
-            const markup = renderToString(
-                <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
-                    <App location={req.url} context={{}} routes={routes} />
-                    {/* // initialData: initialData, */}
-                </Loadable.Capture>
-            );
-            res.send(await template(markup, assets, loadables));
-        }
+        return require(this.appPath);
     }
 
-    _checkRedirect(req, matches){
-        const matchesConfig = matches
-            .map(match => match.pageConfig);
+    _getRouteMatches(req) {
+        const { pages } = this._getSSRBundle();
+        return pages.filter(page => matchPath(req.url, page.pageConfig));
+    }
 
+    _handleRedirect(req, res, next) {
+        const matches = this._getRouteMatches(req);
         if (
-            matchesConfig.some(match => match.authLevel === 'private') &&
+            matches.some(match => match.authLevel === 'private') &&
             !req.isAuthenticated()
         ) {
-            return ('/');
+            res.redirect(cfg.AUTH.PRIVATE_REDIRECT_PATH);
         } else if (
-            matchesConfig.some(match => match.authLevel === 'public') &&
+            matches.some(match => match.authLevel === 'public') &&
             req.isAuthenticated()
         ) {
-            return ('/dashboard');
+            res.redirect(cfg.AUTH.PUBLIC_REDIRECT_PATH);
         } else {
-            return undefined;
+            next();
         }
     }
 

@@ -37,7 +37,7 @@ const initLogger = () => {
             })
         ]
     });
-    logger.debug('================LOGGER INITIALIZED');
+    logger.debug('===========LOGGER INITIALIZED');
     return logger;
 };
 

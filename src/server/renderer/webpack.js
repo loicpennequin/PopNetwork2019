@@ -4,6 +4,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './../../../webpack.config.js';
 import express from 'express';
 import Loadable from 'react-loadable';
+import logger from './../logger';
 
 async function build() {
     const webpackApp = express();
@@ -38,7 +39,9 @@ async function build() {
 
     const port = parseInt(process.env.PORT, 10) + 1;
     webpackApp.listen(port, () => {
-        console.log('webpack dev middleware listening on port ' + port);
+        logger.debug(
+            '===========webpack dev middleware listening on port ' + port
+        );
     });
 
     return webpackApp;
