@@ -1,12 +1,12 @@
 // store/UserProvider.js
-import React, { createContext, useState, memo } from "react";
+import React, { createContext, useState, useEffect, memo } from 'react';
 
 export const StoreContext = createContext({});
 
 // We need a reference to the state outside of the component to access it with hetState() otherwise we get the un-memoized verison of the state which is an empty object.
 let _state = {};
 
-const RenderPure = memo(({children}) => children);
+const RenderPure = memo(({ children }) => children);
 
 const Provider = props => {
     const [state, setState] = useState(_state);
@@ -14,12 +14,10 @@ const Provider = props => {
     const _setState = newState => {
         _state = { ..._state, ...newState };
         setState(_state);
-    }
+    };
     const getState = () => _state;
 
     const [state, setState] = useState(_state);
-    const [initialized, setInitialized] = useState(false);
-    if (!initialized) {
 
     const makeStore = () => {
         const stateUpdateFns = Object.entries(props)
@@ -41,13 +39,11 @@ const Provider = props => {
         };
         _setState(initialState);
     };
-    useEffect(() => makeStore(), []);
 
+    useEffect(() => makeStore(), []);
     return (
         <StoreContext.Provider value={state}>
-            <RenderPure>
-                {props.children}
-            </RenderPure>
+            <RenderPure>{props.children}</RenderPure>
         </StoreContext.Provider>
     );
 };
