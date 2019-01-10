@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { subscribe } from 'daria-store';
+import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
 function mapStoreToProps(store) {
     return {
@@ -19,7 +20,12 @@ class Home extends Component {
     render() {
         const { authenticated } = this.props;
 
-        return <div>You are {authenticated ? '' : 'not'} logged in !</div>;
+        return (
+            <>
+                <div>You are {authenticated ? '' : 'not'} logged in !</div>
+                <LoginForm />
+            </>
+        );
     }
 }
 

@@ -51,7 +51,7 @@ class RESTController {
      */
     findOne(filter) {
         logger.info('RESTController.findOne()');
-        return this.model.forge().findOne(body, this.options.findOne);
+        return this.model.forge().findOne(filter, this.options.findOne);
     }
 
     /**
@@ -64,7 +64,6 @@ class RESTController {
         logger.info('RESTController.create()');
         return this.model.forge(body).create(this.options.create);
     }
-
 
     /**
      * destroy - removes a model from the database

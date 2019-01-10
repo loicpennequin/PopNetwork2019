@@ -7,11 +7,11 @@ const LoggedOutRoute = ({ component: Component, authenticated, ...rest }) => (
         {...rest}
         render={props =>
             !authenticated ? (
-                <Component/>
+                <Component />
             ) : (
                 <Redirect
                     to={{
-                        pathname: '/',
+                        pathname: '/dashboard',
                         state: { from: props.location }
                     }}
                 />
@@ -20,10 +20,10 @@ const LoggedOutRoute = ({ component: Component, authenticated, ...rest }) => (
     />
 );
 
-function mapStateToProps(store){
+function mapStateToProps(store) {
     return {
         authenticated: store.authenticated
     };
-};
+}
 
 export default subscribe(mapStateToProps)(LoggedOutRoute);

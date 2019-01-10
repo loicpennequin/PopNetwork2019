@@ -8,6 +8,7 @@ import template from './template.js';
 import build from './webpack.js';
 import Loadable from 'react-loadable';
 import prefetcher from './prefetcher.js';
+import AuthService from './../auth';
 
 class ReactRenderer {
     constructor() {
@@ -43,6 +44,7 @@ class ReactRenderer {
         const loadables = [];
         const { pageConfig } = this._getRouteMatches(req)[0];
         const initialData = await this._prefetch(pageConfig.name, req);
+        console.log(initialData);
         const markup = renderToString(
             <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
                 <App
@@ -88,7 +90,11 @@ class ReactRenderer {
 
     async _prefetch(key, req) {
         const noop = () => ({});
-        return await (prefetcher[key] || noop)(req);
+        const initialData = {
+            authenticated: AuthService.get('local').isLoggedIn(req)
+        };
+
+        return { ...initialData, ...(await (prefetcher[key] || noop)(req)) };
     }
 
     _getAssets({ webpackStats, fs }) {

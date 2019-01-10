@@ -11,8 +11,14 @@ class Dashboard extends Component {
     };
 
     render() {
-        return <div>I am the dashboard !</div>;
+        const { logout } = this.props;
+        return (
+            <>
+                <div>I am the dashboard !</div>
+                <button onClick={() => logout()}>logout</button>
+            </>
+        );
     }
 }
 
-export default TestPage;
+export default Dashboard;

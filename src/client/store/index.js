@@ -1,6 +1,8 @@
-const store = {};
+import auth from './auth.js';
 
-const createStore = initialStore => ({ ...initialStore, ...store });
+const store = { ...auth };
+
+const createStore = initialStore => ({ ...store, ...initialStore });
 
 export default store;
 

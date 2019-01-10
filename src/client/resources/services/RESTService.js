@@ -2,7 +2,6 @@ import wretch from 'wretch';
 import { dedupe } from 'wretch-middlewares';
 import constants from 'constants.js';
 
-const getToken = () => `Bearer ${localStorage.getItem('token')}`;
 const w = wretch(constants.API_URL)
     .middlewares([dedupe()])
     .options({ credentials: 'include', mode: 'cors' })
@@ -32,24 +31,17 @@ export default {
         w
             .url(url)
             .query(params)
-            .auth(getToken())
             .get(),
     post: (url, body) => {
         return w
             .url(url)
-            .auth(getToken())
             .json(body)
             .post();
     },
     put: (url, body) =>
         w
             .url(url)
-            .auth(getToken())
             .json(body)
             .put(),
-    delete: url =>
-        w
-            .url(url)
-            .auth(getToken())
-            .delete()
+    delete: url => w.url(url).delete()
 };

@@ -15,7 +15,7 @@ module.exports = () => {
         urlPath: '/users',
         name: 'User',
         options: {
-            privateRoutes: ['findAll', 'find', 'destroy', 'update']
+            privateRoutes: ['find', 'destroy', 'update']
         },
         model
     });

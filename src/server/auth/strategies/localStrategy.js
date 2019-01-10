@@ -17,10 +17,14 @@ const comparePassword = (password, user, done) => {
 
 const getUser = async (field, value) => {
     const module = RESTService.get(cfg.AUTH.MODELNAME);
-    return await module.findOne(
-        { [field]: value },
-        { serialize: { visibility: false } }
-    );
+    try {
+        return await module.findOne(
+            { [field]: value },
+            { serialize: { visibility: false } }
+        );
+    } catch (err) {
+        // @FIXME stop being a lazy fuck and fix this
+    }
 };
 
 const authenticate = async (username, password, done) => {

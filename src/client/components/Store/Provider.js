@@ -12,6 +12,7 @@ const Provider = props => {
     const [state, setState] = useState(_state);
     const [initialized, setInitialized] = useState(false);
     const _setState = newState => {
+        console.log(newState);
         _state = { ..._state, ...newState };
         setState(_state);
     };
@@ -25,7 +26,10 @@ const Provider = props => {
             .reduce(
                 (acc, [key, value]) => ({
                     ...acc,
-                    [key]: (...args) => _setState(value(...args)(state))
+                    [key]: async (...args) => {
+                        console.log(key);
+                        return _setState(await value(...args)(state));
+                    }
                 }),
                 {}
             );
