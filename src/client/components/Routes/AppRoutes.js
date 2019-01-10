@@ -1,12 +1,16 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import pages from './../../pages';
+import LoggedOutRoute from 'components/Routes/LoggedOutRoute.js';
+import PrivateRoute from 'components/Routes/PrivateRoute.js';
 
 const AppRoutes = () => (
     <Switch>
-        {pages.map(Page =>
-            <Route exact path={Page.path} component={Page} />
-        )}
+        {pages.map(Page => {
+            const cfg = Page.pageConfig;
+            const Route = cfg.authLevel === 'private' ? PrivateRoute : LoggedOutRoute;
+            return <Route {...cfg} component={Page} key={cfg.name} />
+        })}
     </Switch>
 )
 

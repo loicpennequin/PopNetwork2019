@@ -13,7 +13,7 @@ const App = props => (
     <Provider {...store}>
         <Router location={props.location} context={{}}>
             <div>
-                <nav>{pages.map(page => <Link to={page.path}>{page.pageName}</Link>)}</nav>
+                <nav>{pages.map(page => <Link to={page.pageConfig.path} key={page.pageConfig.name}>{page.pageConfig.name}</Link>)}</nav>
                 <AppRoutes/>
             </div>
         </Router>

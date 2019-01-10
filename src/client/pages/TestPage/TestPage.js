@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 
 class TestPage extends Component {
-    static path = '/test'
-    static pageName= 'TestPage'
+    static pageConfig = {
+        name: 'TestPage',
+        path : '/test',
+        exact: true,
+        authLevel: 'private'
+    }
 
     render() {
         return (
