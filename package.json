@@ -10,7 +10,10 @@
         "prestart": "npm run build:prod",
         "start": "cross-env NODE_ENV=production npm run build:server && node lib/server/index.js",
         "prebuild:db": "node tools/scripts/createDB.js",
-        "build:db": "knex migrate:latest"
+        "build:db": "knex migrate:latest",
+        "presetup": "npm install prompt && node tools/scripts/setup.js",
+        "setup": "npm install && npm build:db",
+        "post-setup": "npm run dev"
     },
     "keywords": [],
     "author": "",
@@ -34,6 +37,7 @@
         "mysql": "^2.16.0",
         "passport": "^0.4.0",
         "passport-local": "^1.0.0",
+        "prompt": "^1.0.0",
         "prop-types": "^15.6.2",
         "react": "16.7.0-alpha.2",
         "react-contextual": "^5.0.2",
