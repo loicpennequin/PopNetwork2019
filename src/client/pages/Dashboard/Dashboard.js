@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
-import { subscribe } from 'daria-store';
+import { useStore } from 'daria-store';
+import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
-@subscribe()
-class Dashboard extends Component {
-    static pageConfig = {
-        name: 'Dashboard',
-        path: '/dashboard',
-        exact: true,
-        authLevel: 'private'
+function mapStateToProps(store) {
+    return {
+        authenticated: store.authenticated
     };
-
-    render() {
-        const { logout } = this.props;
-        return (
-            <>
-                <div>I am the dashboard !</div>
-                <button onClick={() => logout()}>logout</button>
-            </>
-        );
-    }
 }
+
+const Dashboard = () => {
+    const state = useStore(mapStateToProps);
+    return (
+        <>
+            <div>I am the dashboard !</div>
+            <button onClick={() => logout()}>logout</button>
+        </>
+    );
+};
+
+Dashboard.pageConfig = {
+    name: 'Dashboard',
+    path: '/dashboard',
+    exact: true,
+    authLevel: 'private'
+};
 
 export default Dashboard;

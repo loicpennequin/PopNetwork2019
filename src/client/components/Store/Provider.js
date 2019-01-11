@@ -35,7 +35,6 @@ const makeStore = (props, setState) => {
 
 const Provider = props => {
     const _setState = (...args) => setState(...args);
-    const _state = () => state;
     const [state, setState] = useState(makeStore(props, _setState));
 
     return (

@@ -1,14 +1,15 @@
 import React from 'react';
 import { Form, Text } from 'informed';
-import { subscribe } from 'daria-store';
+import { useStore } from 'daria-store';
 
 const LoginForm = props => {
+    const { login, authenticated } = useStore();
     const onSubmit = values => {
-        props.login(values);
+        login(values);
     };
     return (
         <>
-            <p>Authenticated: {' ' + props.authenticated}</p>
+            <p>Authenticated: {' ' + authenticated}</p>
             <Form id="intro-form" onSubmit={onSubmit}>
                 <label htmlFor="login-username">Username:</label>
                 <Text field="username" id="login-username" />
@@ -20,4 +21,4 @@ const LoginForm = props => {
     );
 };
 
-export default subscribe()(LoginForm);
+export default LoginForm;

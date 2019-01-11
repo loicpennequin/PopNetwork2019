@@ -1,31 +1,23 @@
 import React, { Component } from 'react';
-import { subscribe } from 'daria-store';
+import { useStore } from 'daria-store';
 import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
-function mapStoreToProps(store) {
+function mapStateToProps(store) {
     return {
         authenticated: store.authenticated
     };
 }
 
-// @subscribe(mapStoreToProps)
-class Home extends Component {
-    static pageConfig = {
-        name: 'Home',
-        path: '/',
-        exact: true,
-        authLevel: 'public'
-    };
+const Home = () => {
+    const state = useStore(mapStateToProps);
+    return <LoginForm />;
+};
 
-    render() {
-        const { authenticated } = this.props;
-
-        return (
-            <>
-                <LoginForm />
-            </>
-        );
-    }
-}
+Home.pageConfig = {
+    name: 'Home',
+    path: '/',
+    exact: true,
+    authLevel: 'public'
+};
 
 export default Home;

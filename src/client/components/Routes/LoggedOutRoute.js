@@ -1,24 +1,27 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { subscribe } from 'daria-store';
+import { useStore } from 'daria-store';
 
-const LoggedOutRoute = ({ component: Component, authenticated, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            !authenticated ? (
-                <Component />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: '/dashboard',
-                        state: { from: props.location }
-                    }}
-                />
-            )
-        }
-    />
-);
+const LoggedOutRoute = ({ component: Component, ...rest }) => {
+    const { authenticated } = useStore(mapStateToProps);
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                !authenticated ? (
+                    <Component />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/dashboard',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
 
 function mapStateToProps(store) {
     return {
@@ -26,4 +29,4 @@ function mapStateToProps(store) {
     };
 }
 
-export default subscribe(mapStateToProps)(LoggedOutRoute);
+export default LoggedOutRoute;
