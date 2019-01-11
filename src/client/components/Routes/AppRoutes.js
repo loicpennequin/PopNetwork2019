@@ -8,10 +8,11 @@ const AppRoutes = () => (
     <Switch>
         {pages.map(Page => {
             const cfg = Page.pageConfig;
-            const Route = cfg.authLevel === 'private' ? PrivateRoute : LoggedOutRoute;
-            return <Route {...cfg} component={Page} key={cfg.name} />
+            const Route =
+                cfg.authLevel === 'private' ? PrivateRoute : LoggedOutRoute;
+            return <Route {...cfg} component={Page} key={cfg.name} />;
         })}
     </Switch>
-)
+);
 
 export default AppRoutes;

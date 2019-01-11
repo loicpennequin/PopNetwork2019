@@ -1,6 +1,4 @@
-import Provider from './Provider.js';
-import subscribe from './Subscribe.js';
+import Provider, { StoreContext } from './Provider.js';
+import subscribe, { useStore } from './Subscribe.js';
 
-export {
-    Provider, subscribe
-}
+export { Provider, StoreContext, subscribe, useStore };

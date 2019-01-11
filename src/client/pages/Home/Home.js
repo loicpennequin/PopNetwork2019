@@ -8,7 +8,7 @@ function mapStoreToProps(store) {
     };
 }
 
-@subscribe(mapStoreToProps)
+// @subscribe(mapStoreToProps)
 class Home extends Component {
     static pageConfig = {
         name: 'Home',
@@ -22,7 +22,6 @@ class Home extends Component {
 
         return (
             <>
-                <div>You are {authenticated ? '' : 'not'} logged in !</div>
                 <LoginForm />
             </>
         );
