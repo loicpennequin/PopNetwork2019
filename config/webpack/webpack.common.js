@@ -25,6 +25,10 @@ module.exports = env => ({
                 __dirname,
                 './../../src/client/resources/constants.js'
             ),
+            utils: path.resolve(
+                __dirname,
+                './../../src/client/resources/utils'
+            ),
             resources: path.resolve(__dirname, './../../src/client/resources'),
             pages: path.resolve(__dirname, './../../src/client/pages')
         }

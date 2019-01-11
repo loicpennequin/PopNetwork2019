@@ -15,22 +15,10 @@ const App = props => {
         : window.__INITIAL_DATA__;
     const store = createStore(initialData);
 
-    const navbar = (
-        <nav>
-            {pages.map(page => (
-                <Link to={page.pageConfig.path} key={page.pageConfig.name}>
-                    {page.pageConfig.name}
-                </Link>
-            ))}
-        </nav>
-    );
     return (
         <Provider {...store}>
             <Router location={props.location} context={{}}>
-                <div>
-                    {navbar}
-                    <AppRoutes />
-                </div>
+                <AppRoutes />
             </Router>
         </Provider>
     );
