@@ -1,0 +1,9 @@
+@each $key, $value in $derived-colors{
+    .text-#{$key}{
+        color: #{$value};
+    }
+    .bg-#{$key}{
+        background-color: #{$value};
+        color: findColorInvert($value);
+    }
+}

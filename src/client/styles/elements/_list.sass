@@ -1,0 +1,26 @@
+.rich-list
+    --border: solid 1px #{$color-gray-4}
+    +grid(3)
+    border: var(--border)
+    border-bottom-color: $color-clear
+
+.rich-list_item
+    &:nth-of-type(3n-2), &:nth-of-type(3n-1)
+        a
+            border-right: var(--border)
+    &:nth-of-type(odd)
+        a
+            background-color: $color-gray-5
+    &:nth-of-type(even)
+        a
+            background-color: $color-white
+    a
+        padding: $spacing-sm $spacing-xs
+        display: flex
+        justify-content: center
+        align-items: center
+        border-bottom: var(--border)
+        height: 100%
+        &:hover
+            background-color: $color-primary
+            color: $color-primary-invert

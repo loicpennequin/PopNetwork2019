@@ -1,0 +1,20 @@
+.promotions_title
+    position: relative
+    padding-bottom: $fixed-spacing-sm
+    margin-bottom: $spacing-xs
+    font-weight: bold
+    +after
+        bottom: 0
+        left: 50%
+        transform: translate(-50%)
+        height: 1px
+        width: 3em
+        background-color: $color-primary
+
+.promotion-list
+    margin: $spacing-sm
+
+.promotion-create_form.disabled
+    opacity: 0.5
+    .input[type="submit"]
+        cursor: not-allowed

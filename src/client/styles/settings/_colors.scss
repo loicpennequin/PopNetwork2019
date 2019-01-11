@@ -1,0 +1,81 @@
+$color-primary: color(indigo-l-2);
+$color-primary-invert: findColorInvert($color-primary);
+$color-primary-light: lighten($color-primary, 10%);
+$color-primary-lighter: lighten($color-primary, 25%);
+$color-primary-dark: darken($color-primary, 10%);
+$color-primary-darker: darken($color-primary, 25%);
+$color-primary-half: transparentize($color-primary, 0.5);
+
+$color-secondary: color(cyan-d-1);
+$color-secondary-light: lighten($color-secondary, 10%);
+$color-secondary-lighter: lighten($color-secondary, 25%);
+$color-secondary-dark: darken($color-secondary, 10%);
+$color-secondary-darker: darken($color-secondary, 25%);
+$color-secondary-half: transparentize($color-secondary, 0.5);
+
+$color-black: color(black-l-1);
+$color-gray-1: color(grey-d-8);
+$color-gray-2: color(grey-d-4);
+$color-gray-3: color(grey);
+$color-gray-4: color(grey-l-6);
+$color-gray-5: color(grey-l-9);
+$color-white: color(white);
+
+$color-clear: hsla(0, 0%, 0%, 0);
+
+$color-success: color(green-l-1);
+$color-success-invert: findColorInvert($color-success);
+$color-info: color(lightblue-l-1);
+$color-info-invert: findColorInvert($color-info);
+$color-warning: color(orange-l-3);
+$color-warning-invert: findColorInvert($color-warning);
+$color-danger: color(red-l-1);
+$color-danger-invert: findColorInvert($color-danger);
+
+$color-text: $color-gray-2;
+$color-title: $color-black;
+$color-subtitle: $color-gray-2;
+$color-link: $color-primary;
+$color-link-hovered: $color-primary-dark;
+$color-link-visited: $color-primary;
+$color-background: color(indigo-l-9);
+$color-foreground: $color-white;
+
+$color-body: $color-white;
+
+$derived-colors: (
+    primary: $color-primary,
+    primary-dark: $color-primary-dark,
+    primary-darker: $color-primary-darker,
+    primary-light: $color-primary-light,
+    primary-lighter: $color-primary-lighter,
+    primary-half: $color-primary-half,
+    secondary: $color-secondary,
+    secondary-dark: $color-secondary-dark,
+    secondary-darker: $color-secondary-darker,
+    secondary-light: $color-secondary-light,
+    secondary-lighter: $color-secondary-lighter,
+    secondary-half: $color-secondary-half,
+    black: $color-black,
+    dark: $color-gray-2,
+    light: $color-gray-5,
+    white: $color-white,
+    info: $color-info,
+    success: $color-success,
+    warning: $color-warning,
+    danger: $color-danger,
+    text: $color-text,
+    title: $color-title,
+    subtitle: $color-subtitle,
+    link: $color-link,
+    link-hovered: $color-link-hovered,
+    link-visited: $color-link-visited,
+    foreground: $color-foreground,
+    background: $color-background
+);
+
+:root {
+    @each $key, $value in $derived-colors {
+        --color-#{$key}: #{$value};
+    }
+}

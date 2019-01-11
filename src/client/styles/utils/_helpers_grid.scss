@@ -1,0 +1,27 @@
+@for $i from 1 through 15{
+    .grid-#{$i}{
+        @include grid($i)
+    }
+
+    .column-#{$i}{
+        grid-column: span $i;
+    }
+
+    .row-#{$i}{
+        grid-row: span $i;
+    }
+
+    @for $j from 1 through 15{
+        .grid-#{$i}-#{$j}{
+            @include grid($i, $j)
+        }
+        
+        .column-#{$i}-#{$j}{
+            grid-column: #{$i} / #{$j};
+        }
+
+        .row-#{$i}-#{$j}{
+            grid-row: #{$i} / #{$j};
+        }
+    }
+}

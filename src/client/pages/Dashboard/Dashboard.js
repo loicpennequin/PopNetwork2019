@@ -4,12 +4,12 @@ import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
 function mapStateToProps(store) {
     return {
-        authenticated: store.authenticated
+        logout: store.logout
     };
 }
 
 const Dashboard = () => {
-    const state = useStore(mapStateToProps);
+    const { logout } = useStore(mapStateToProps);
     return (
         <>
             <div>I am the dashboard !</div>

@@ -5,7 +5,7 @@ import App from './components/App.js';
 // import routes from './resources/services/routesService.js';
 import Loadable from 'react-loadable';
 
-// import './styles/app.sass';
+import './styles/app.sass';
 // import './resources/services/iconService.js';
 
 Loadable.preloadReady().then(() => {

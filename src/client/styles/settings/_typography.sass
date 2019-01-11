@@ -1,0 +1,30 @@
+$font-primary: 'Roboto', Helvetica, arial, sans-serif
+$font-title: 'Roboto', Helvetica, arial, cursive
+$font-serif: 'Roboto', Garamond, Georgia, Times New Roman, serif
+$font-monospace: "Roboto Mono", monospace
+
+
+$text-scale-ratio: 1.2
+$text-scale-ratio-mobile: 1.08
+
+$text-base-size: 1.05em
+$base-line-height: 1.1
+
+$heading-line-height: calc( 1.2 * #{$base-line-height})
+$textcontent-line-height: calc( 1.5 * #{$base-line-height})
+
+\:root
+    --font-primary: #{$font-primary}
+    --font-title: #{$font-title}
+    --font-serif: #{$font-serif}
+    --font-monospace: #{$font-monospace}
+    --text-scale-ratio: #{$text-scale-ratio}
+    --text-scale-ratio-mobile: #{$text-scale-ratio}
+
+$text-xs: calc(#{$text-base-size} / (#{$text-scale-ratio} * #{$text-scale-ratio}) )
+$text-sm: calc(#{$text-base-size} / #{$text-scale-ratio})
+$text-md: calc(#{$text-base-size} * #{$text-scale-ratio})
+$text-lg: calc(#{$text-base-size} * #{$text-scale-ratio} * #{$text-scale-ratio})
+$text-xl: calc(#{$text-base-size} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio})
+$text-xxl: calc(#{$text-base-size} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio})
+$text-xxxl: calc(#{$text-base-size} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio} * #{$text-scale-ratio})

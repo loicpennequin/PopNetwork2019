@@ -1,0 +1,43 @@
+=flex
+    display: flex
+
+=flex-center
+    +flex
+    justify-content: center
+    align-items: center
+
+=flex-hor
+    +flex
+    flex-direction: row
+
+=flex-hor-rev
+    +flex
+    flex-direction: row-reverse
+
+=flex-ver
+    +flex
+    flex-direction: column
+
+=flex-ver-rev
+    +flex
+    flex-direction: column-reverse
+
+=flex-push-right
+    +flex-hor
+    &:last-child
+        margin-left: auto
+
+=flex-push-left
+    +flex-hor
+    &:first-child
+        margin-right: auto
+
+=flex-push-top
+    +flex-hor
+    &:first-child
+        margin-bottom:  auto
+
+=flex-push-bottom
+    +flex-hor
+    &:last-child
+        margin-top: auto

@@ -2,22 +2,32 @@ import React from 'react';
 import { Form, Text } from 'informed';
 import { useStore } from 'daria-store';
 
-const LoginForm = props => {
-    const { login, authenticated } = useStore();
-    const onSubmit = values => {
-        login(values);
-    };
+const LoginForm = () => {
+    const { login } = useStore();
     return (
-        <>
-            <p>Authenticated: {' ' + authenticated}</p>
-            <Form id="intro-form" onSubmit={onSubmit}>
-                <label htmlFor="login-username">Username:</label>
-                <Text field="username" id="login-username" />
-                <label htmlFor="login-password">Password:</label>
-                <Text field="password" type="password" id="login-password" />
-                <button type="submit">Login</button>
-            </Form>
-        </>
+        <Form id="intro-form" onSubmit={login}>
+            <label className="label" htmlFor="login-username">
+                Username:
+            </label>
+            <Text
+                className="input"
+                type="text"
+                field="username"
+                id="login-username"
+            />
+            <label className="label" htmlFor="login-password">
+                Password:
+            </label>
+            <Text
+                className="input"
+                field="password"
+                type="password"
+                id="login-password"
+            />
+            <button className="input" type="submit">
+                Login
+            </button>
+        </Form>
     );
 };
 

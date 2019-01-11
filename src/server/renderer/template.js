@@ -19,8 +19,8 @@ const template = async (markup, assets, modules, initialData) => {
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
                 <link rel="manifest" href="/assets/manifest.json">
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-                <link href="https://fonts.googleapis.com/css?family=Poiret+One|Lora:400,400i,700|Roboto:400,700" rel="stylesheet">-->
+                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">-->
+                <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:400,700,900" rel="stylesheet">
                 <title>Pop Network</title>
                 ${assets.css}
             </head>

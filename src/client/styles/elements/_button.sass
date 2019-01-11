@@ -1,0 +1,24 @@
+=btn
+    border: none
+    padding: $spacing-xs $spacing-sm
+    cursor: pointer
+
+@each $key, $value in $derived-colors
+    \:global(.btn-#{$key})
+        +btn
+        background-color: #{$value}
+        color: findColorInvert($value)
+        &:hover
+            background-color: darken($value, 10%)
+        &.outlined
+            background-color: $color-clear
+            color: #{$value}
+            border: solid 1px #{$value}
+            &:hover
+                color: darken($value, 10%)
+                border-color: darken($value, 10%)
+
+\:global(.btn-clear)
+    +btn
+    background-color: $color-clear
+    color: inherit

@@ -1,0 +1,23 @@
+=mobile
+    @media screen and (max-width: $breakpoint-mobile)
+        @content
+
+=tablet
+    @media screen and (max-width: $breakpoint-tablet)
+        @content
+
+=desktop
+    @media screen and (max-width: $breakpoint-desktop)
+        @content
+
+=hd
+    @media screen and (min-width: $breakpoint-hd)
+        @content
+
+=tablet-only
+    @media screen and (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-tablet-max)
+        @content
+
+=desktop-only
+    @media screen and (min-width: $breakpoint-desktop-min) and (max-width: $breakpoint-desktop-max)
+        @content

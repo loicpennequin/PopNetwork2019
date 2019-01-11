@@ -1,0 +1,57 @@
+=after($content : '')
+    &::after
+        content: $content
+        position: absolute
+        @content
+
+=before($content : '')
+    &::after
+        content: $content
+        position: absolute
+        @content
+
+=font-awesome($font)
+    display: inline-block
+    font-style: normal
+    font-variant: normal
+    text-rendering: auto
+    -webkit-font-smoothing: antialiased
+    font-family: $font
+
+=fontawesome-before($icon, $font : 'Font Awesome 5 Free')
+    +before($icon)
+        +font-awesome($font)
+
+=fontawesome-after($icon, $font : 'Font Awesome 5 Free')
+    +after($icon)
+        +font-awesome($font)
+
+=fixed-top($width: 100%)
+    position: fixed
+    top: 0
+    width: $width
+
+=fixed-bottom($width: 100%)
+    position: fixed
+    bottom: 0
+    width: $width
+
+=triangle-right($size, $color)
+    border-style: solid
+    border-width: $size $size $size 0
+    border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) $color
+
+=triangle-left($size, $color)
+    border-style: solid
+    border-width: $size $size $size 0
+    border-color: rgba(0,0,0,0) $color rgba(0,0,0,0) rgba(0,0,0,0)
+
+=triangle-top($size, $color)
+    border-style: solid
+    border-width: 0 $size $size $size $size
+    border-color: rgba(0,0,0,0) $color rgba(0,0,0,0) rgba(0,0,0,0)
+
+=triangle-left($size, $color)
+    border-style: solid
+    border-width: $size $size 0 $size
+    border-color: rgba(0,0,0,0) $color rgba(0,0,0,0) rgba(0,0,0,0)

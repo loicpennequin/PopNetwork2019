@@ -1,0 +1,23 @@
+@import "settings/all"
+@import "mixins/all"
+@import "utils/all"
+@import "layout/all"
+@import "elements/all"
+
+\:global(#app)
+    font-size: $text-base-size
+    font-family: $font-primary
+    line-height: $base-line-height
+    color: var(--color-text)
+    background-color: $color-background
+    overflow-x: hidden
+    min-height: 100vh
+    width: 100vw
+    background: radial-gradient(circle at center, $color-white 50%, $color-gray-5)
+
+a
+    color: $color-link
+    &:hover
+        color: $color-link-hovered
+    // &:visited
+        // color: $color-link-visited

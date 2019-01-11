@@ -44,7 +44,6 @@ class ReactRenderer {
         const loadables = [];
         const { pageConfig } = this._getRouteMatches(req)[0];
         const initialData = await this._prefetch(pageConfig.name, req);
-        console.log(initialData);
         const markup = renderToString(
             <Loadable.Capture report={moduleName => loadable.push(moduleName)}>
                 <App
@@ -55,6 +54,7 @@ class ReactRenderer {
                 />
             </Loadable.Capture>
         );
+        console.log(markup);
         res.send(await template(markup, assets, loadables, initialData));
     }
 
