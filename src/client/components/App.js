@@ -7,6 +7,10 @@ import { createStore } from './../store';
 import AppRoutes from 'components/Routes/AppRoutes.js';
 import pages from './../pages';
 
+if (!__IS_BROWSER__) {
+    require('source-map-support').install();
+}
+
 const Router = __IS_BROWSER__ ? BrowserRouter : StaticRouter;
 
 const App = props => {

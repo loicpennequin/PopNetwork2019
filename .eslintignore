@@ -1,0 +1,7 @@
+package-lock.json
+node_modules/
+config/
+tools/
+test/
+src/server/views/
+public/

@@ -34,7 +34,7 @@ class RESTResource {
         this.app = express();
         this.router = express.Router();
         this.corsOptions = cfg.CORS;
-        this.middlewares = [cors(this.corsOptions)];
+        this.middlewares = [cors(this.corsOptions), this._logRequest];
 
         this._setupRoutes();
     }
@@ -162,7 +162,6 @@ class RESTResource {
     }
 
     start(app) {
-        this.app.use(this._logRequest);
         this.app.use(this.urlPath, this.router);
         app.use(cfg.REST.API_PATH, this.app);
         logger.debug(`- ${this.name} REST Resource started`);

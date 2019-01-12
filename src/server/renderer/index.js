@@ -54,12 +54,11 @@ class ReactRenderer {
                 />
             </Loadable.Capture>
         );
-        console.log(markup);
         res.send(await template(markup, assets, loadables, initialData));
     }
 
     _getSSRBundle() {
-        // @FIXME : still a problem bien require cache even when doing this.
+        // @FIXME : still a problem with require cache even when doing this.
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[this.appPath];
         }

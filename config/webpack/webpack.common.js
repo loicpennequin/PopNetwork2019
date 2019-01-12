@@ -29,6 +29,14 @@ module.exports = env => ({
                 __dirname,
                 './../../src/client/resources/utils'
             ),
+            models: path.resolve(
+                __dirname,
+                './../../src/client/resources/models'
+            ),
+            services: path.resolve(
+                __dirname,
+                './../../src/client/resources/services'
+            ),
             resources: path.resolve(__dirname, './../../src/client/resources'),
             pages: path.resolve(__dirname, './../../src/client/pages')
         }

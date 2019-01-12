@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useStore } from 'daria-store';
+import Prefetcher from './Prefetcher.js';
 
-const LoggedOutRoute = ({ component: Component, ...rest }) => {
+const LoggedOutRoute = ({ component, ...rest }) => {
     const { authenticated } = useStore(mapStateToProps);
     return (
         <Route
             {...rest}
             render={props =>
                 authenticated ? (
-                    <Component />
+                    <Prefetcher component={component} />
                 ) : (
                     <Redirect
                         to={{

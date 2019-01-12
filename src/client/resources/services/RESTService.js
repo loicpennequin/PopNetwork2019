@@ -1,6 +1,6 @@
 import wretch from 'wretch';
 import { dedupe } from 'wretch-middlewares';
-import constants from 'constants.js';
+import constants from 'constants';
 
 const w = wretch(constants.API_URL)
     .middlewares([dedupe()])

@@ -10,7 +10,7 @@ const entryPath = env => ({
         `webpack-hot-middleware/client?path=http://localhost:${parseInt(
             env.port,
             10
-        ) + 1}/__webpack_hmr`,
+        ) + 1}/__webpack_hmr&quiet=true`,
         path.resolve(__dirname, '../../src/client/index.js')
     ],
     production: path.resolve(__dirname, '../../src/client/index.js')

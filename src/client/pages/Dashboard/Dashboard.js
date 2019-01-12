@@ -1,18 +1,27 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from 'daria-store';
 import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
 function mapStateToProps(store) {
     return {
-        logout: store.logout
+        logout: store.logout,
+        getCurrentUser: store.getCurrentUser,
+        currentUser: store.currentUser
     };
 }
 
 const Dashboard = () => {
-    const { logout } = useStore(mapStateToProps);
+    const { logout, currentUser, getCurrentUser } = useStore(mapStateToProps);
+    // useEffect(() => {
+    //     getCurrentUser();
+    // }, []);
     return (
         <>
-            <div>I am the dashboard !</div>
+            {!currentUser ? (
+                <p>Loading user data...</p>
+            ) : (
+                <p>Hello, {currentUser.username} !</p>
+            )}
             <button onClick={() => logout()}>logout</button>
         </>
     );
@@ -23,6 +32,10 @@ Dashboard.pageConfig = {
     path: '/dashboard',
     exact: true,
     authLevel: 'private'
+};
+
+Dashboard.getInitialState = async ({ getCurrentUser }) => {
+    await getCurrentUser();
 };
 
 export default Dashboard;
