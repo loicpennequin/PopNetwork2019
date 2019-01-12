@@ -9,8 +9,6 @@ let _state;
 const RenderPure = memo(({ children }) => children);
 
 const makeStore = (props, setState) => {
-    console.log('%cmakeStore', 'color: lime');
-    console.log(_state);
     const stateUpdateFns = Object.entries(props)
         .filter(([key, value]) => {
             return typeof value === 'function';
@@ -19,18 +17,8 @@ const makeStore = (props, setState) => {
             (acc, [key, value]) => ({
                 ...acc,
                 [key]: async (...args) => {
-                    console.log(
-                        '%cstore.' + key + ', current state :',
-                        'color: blue'
-                    );
-                    console.log(_state);
                     const newState = await value(...args)(_state);
                     _state = { ..._state, ...newState };
-                    console.log(
-                        '%cstore.' + key + ', current state :',
-                        'color: blue'
-                    );
-                    console.log(_state);
                     return setState(_state);
                 }
             }),
@@ -48,7 +36,6 @@ const makeStore = (props, setState) => {
 };
 
 const Provider = ({ children, ...props }) => {
-    console.log('%cPROVIDER RENDER', 'color: red');
     const _setState = (...args) => setState(...args);
     const [state, setState] = useState(makeStore(props, _setState));
 

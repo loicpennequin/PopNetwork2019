@@ -5,6 +5,7 @@ const sockets = (io, socket) => {};
 
 const model = {
     tableName: 'users',
+    hidden: ['password'],
     bcrypt: { field: 'password' }
 };
 

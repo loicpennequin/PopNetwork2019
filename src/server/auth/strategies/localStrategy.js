@@ -24,6 +24,7 @@ const getUser = async (field, value) => {
         );
     } catch (err) {
         // @FIXME stop being a lazy fuck and fix this
+        throw new Error(err);
     }
 };
 

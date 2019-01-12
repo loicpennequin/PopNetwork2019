@@ -73,14 +73,16 @@ class ReactRenderer {
     _handleRedirect(req, res, next) {
         const matches = this._getRouteMatches(req);
         if (
-            matches.some(match => match.authLevel === 'private') &&
+            matches.some(match => match.pageConfig.authLevel === 'private') &&
             !req.isAuthenticated()
         ) {
+            logger.debug('should redirect');
             res.redirect(cfg.AUTH.PRIVATE_REDIRECT_PATH);
         } else if (
-            matches.some(match => match.authLevel === 'public') &&
+            matches.some(match => match.pageConfig.authLevel === 'public') &&
             req.isAuthenticated()
         ) {
+            logger.debug('should redirect');
             res.redirect(cfg.AUTH.PUBLIC_REDIRECT_PATH);
         } else {
             next();
@@ -92,8 +94,7 @@ class ReactRenderer {
         const initialData = {
             authenticated: AuthService.get('local').isLoggedIn(req)
         };
-
-        return { ...initialData, ...(await (prefetcher[key] || noop)(req)) };
+        return { ...initialData, ...(await prefetcher[key](req)) };
     }
 
     _getAssets({ webpackStats, fs }) {

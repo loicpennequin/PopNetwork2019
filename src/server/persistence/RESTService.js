@@ -15,6 +15,7 @@ class RestService {
         this.knex = knex(dbConfig);
         this.bookshelf = bookshelf(this.knex);
         this.bookshelf.plugin('registry');
+        this.bookshelf.plugin('visibility');
         this.bookshelf.plugin('pagination');
         this.bookshelf.plugin(bookshelfBcrypt);
 
