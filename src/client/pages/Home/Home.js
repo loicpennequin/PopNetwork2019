@@ -23,8 +23,4 @@ Home.pageConfig = {
     authLevel: 'public'
 };
 
-Home.getInitialState = async () => {
-    noop();
-};
-
 export default Home;

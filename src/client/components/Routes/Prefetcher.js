@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from 'daria-store';
 import { withRouter } from 'react-router-dom';
 
+// @TODO need to think about another implementation...unneeded re-renders and clunky utilisation...could probably make a usePrefetch custom hook
 const Prefetcher = ({ component: Component }) => {
     const store = useStore();
     const [fetching, setFetching] = useState(
@@ -14,7 +15,7 @@ const Prefetcher = ({ component: Component }) => {
     );
     // useEffect doesnt support useEffect(async() => {...}, [])
     const fetchData = async () => {
-        await Component.getInitialState(store);
+        const fn = await store['prefetch' + Component.pageConfig.name]();
         setFetching(false);
     };
 
@@ -24,17 +25,9 @@ const Prefetcher = ({ component: Component }) => {
 
     useEffect(() => {
         if (store.needPrefetch) {
-            console.log('%cPrefetcher: fetch data', 'color: magenta');
             fetchData();
-        } else if (!store.needPrefetch) {
-            console.log(
-                '%cPrefetcher: set needPrefetch to true',
-                'color: magenta'
-            );
-            enablePrefetch();
         } else {
-            console.log('%cPrefetcher: set fetching to true', 'color: magenta');
-            setFetching(false);
+            enablePrefetch();
         }
     }, []);
 

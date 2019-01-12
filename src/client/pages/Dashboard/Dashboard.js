@@ -34,8 +34,4 @@ Dashboard.pageConfig = {
     authLevel: 'private'
 };
 
-Dashboard.getInitialState = async ({ getCurrentUser }) => {
-    await getCurrentUser();
-};
-
 export default Dashboard;

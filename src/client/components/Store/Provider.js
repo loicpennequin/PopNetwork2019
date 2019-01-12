@@ -17,8 +17,10 @@ const makeStore = (props, setState) => {
             (acc, [key, value]) => ({
                 ...acc,
                 [key]: async (...args) => {
+                    console.log('%cstore.' + key, 'color: blue');
                     const newState = await value(...args)(_state);
                     _state = { ..._state, ...newState };
+                    console.log('%cstore.' + key + ' finished', 'color: blue');
                     return setState(_state);
                 }
             }),
