@@ -5,4 +5,4 @@ logs/
 lib/
 confg/.env
 .tern-project
-.src/server/views/
+src/server/views/

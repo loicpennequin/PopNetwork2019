@@ -37,7 +37,7 @@ class ReactRenderer {
     async render(req, res) {
         // @TODO: handle initialState fetching
 
-        const { default: App, pages } = require(this.appPath);
+        const { default: App } = require(this.appPath);
 
         const assets = this._getAssets(res.locals);
         const routes = [];
@@ -106,7 +106,6 @@ class ReactRenderer {
         }
         const assetsByChunkName = webpackStats.toJson().children[0]
             .assetsByChunkName;
-        const outputPath = webpackStats.toJson().outputPath;
         const normalizedAssets = normalizeAssets(assetsByChunkName['app']);
         return {
             css: normalizedAssets
@@ -115,7 +114,7 @@ class ReactRenderer {
                 .join('\n'),
             js: normalizedAssets
                 .filter(path => path.endsWith('.js'))
-                .map(path => `<script src="${path}"></script>`)
+                .map(path => `<script src="/${path}"></script>`)
                 .join('\n')
         };
     }

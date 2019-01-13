@@ -1,13 +1,11 @@
 import User from 'models/UserModel';
-import { LocalStorage } from 'utils';
 
 export default {
     getCurrentUser: () => async state => {
-        const id = LocalStorage.get('uid');
-        const user = new User({ id });
+        const currentUser = new User();
         try {
-            await user.get();
-            return { currentUser: user };
+            await currentUser.getSelf();
+            return { currentUser };
         } catch (e) {
             console.log(e);
             return { currentUserError: e };

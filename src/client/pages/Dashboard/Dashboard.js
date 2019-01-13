@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useStore } from 'daria-store';
-import LoginForm from 'components/Auth/LoginForm/LoginForm';
 
 function mapStateToProps(store) {
     return {
@@ -11,10 +11,8 @@ function mapStateToProps(store) {
 }
 
 const Dashboard = () => {
-    const { logout, currentUser, getCurrentUser } = useStore(mapStateToProps);
-    // useEffect(() => {
-    //     getCurrentUser();
-    // }, []);
+    const { logout, currentUser } = useStore(mapStateToProps);
+    const profileUrl = `/profile/${currentUser.id}`;
     return (
         <>
             {!currentUser ? (
@@ -22,6 +20,7 @@ const Dashboard = () => {
             ) : (
                 <p>Hello, {currentUser.username} !</p>
             )}
+            <Link to={profileUrl}>Your Profile</Link>
             <button onClick={() => logout()}>logout</button>
         </>
     );

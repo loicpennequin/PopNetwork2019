@@ -5,8 +5,6 @@
  * @author Daria <lo.pennequin@gmail.com>
  */
 
-import logger from './../logger';
-
 class RESTController {
     /**
      * constructor
@@ -62,7 +60,9 @@ class RESTController {
      * @return {Object} the created Model fields
      */
     async create(body = {}, options) {
-        return await this.model.forge(body).create(this._aggregateOptions('create', options));
+        return await this.model
+            .forge(body)
+            .create(this._aggregateOptions('create', options));
     }
 
     /**
@@ -72,7 +72,9 @@ class RESTController {
      * @return {Object} empty model
      */
     async destroy(id, options) {
-        return await this.model.forge({ id }).destroy(this._aggregateOptions('delete', options));
+        return await this.model
+            .forge({ id })
+            .destroy(this._aggregateOptions('delete', options));
     }
 
     /**
@@ -83,7 +85,9 @@ class RESTController {
      * @return {Objec t} the updated model information
      */
     async update(id, body, options) {
-        return await this.model.forge({ id }).update(body, this._aggregateOptions('update', options));
+        return await this.model
+            .forge({ id })
+            .update(body, this._aggregateOptions('update', options));
     }
 
     _aggregateOptions(key, options) {

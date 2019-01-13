@@ -25,6 +25,13 @@ const cfg = Object.freeze({
     REST: Object.freeze({
         API_PATH: '/api',
         DEFAULT_PAGE_SIZE: 30
+    }),
+    ENUMS: Object.freeze({
+        FRIENDSHIP_REQUESTS_STATUS: Object.freeze({
+            PENDING: 1,
+            ACCEPTED: 2,
+            DECLINED: 3
+        })
     })
 });
 

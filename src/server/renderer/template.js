@@ -27,10 +27,10 @@ const template = async (markup, assets, modules, initialData) => {
             <body>
                 <div id="app">${markup}</div>
                 <script>window.__INITIAL_DATA__ = ${JSON.stringify(
-                    initialData
-                )};</script>
-                <script src="runtime.js"></script>
-                <script src="vendors.js"></script>
+        initialData
+    )};</script>
+                <script src="/runtime.js"></script>
+                <script src="/vendors.js"></script>
                 ${loadables}
                 ${assets.js}
             </body>

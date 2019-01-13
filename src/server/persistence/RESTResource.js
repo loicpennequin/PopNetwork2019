@@ -5,7 +5,6 @@ import { wrap } from './../errorHandling';
 import RESTModel from './RESTModel.js';
 import RESTController from './RESTController.js';
 import { cfg } from './../../../config';
-import AuthService from './../auth';
 
 const DEFAULT_OPTIONS = {
     findAll: {},
@@ -35,8 +34,6 @@ class RESTResource {
         this.router = express.Router();
         this.corsOptions = cfg.CORS;
         this.middlewares = [cors(this.corsOptions), this._logRequest];
-
-        this._setupRoutes();
     }
 
     _setupRoutes() {
@@ -131,6 +128,8 @@ class RESTResource {
     }
 
     _handleError(e) {
+        logger.error(`===========REST API ERROR`);
+        logger.error(e);
         if (e.message === 'EmptyResponse') {
             return null;
         } else {
@@ -146,22 +145,24 @@ class RESTResource {
     }
 
     get(url, cb, isPrivate) {
-        this_addRoute('get', url, isPrivate, cb);
+        this._addRoute('get', url, isPrivate, cb);
     }
 
     post(url, cb, isPrivate) {
-        this_addRoute('post', url, isPrivate, cb);
+        this._addRoute('post', url, isPrivate, cb);
     }
 
     delete(url, cb, isPrivate) {
-        this_addRoute('delete', url, isPrivate, cb);
+        this._addRoute('delete', url, isPrivate, cb);
     }
 
     put(url, cb, isPrivate) {
-        this_addRoute('put', url, isPrivate, cb);
+        this._addRoute('put', url, isPrivate, cb);
     }
 
     start(app) {
+        this._setupRoutes();
+
         this.app.use(this.urlPath, this.router);
         app.use(cfg.REST.API_PATH, this.app);
         logger.debug(`- ${this.name} REST Resource started`);
