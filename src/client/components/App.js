@@ -18,7 +18,7 @@ const App = props => {
         ? props.initialData
         : window.__INITIAL_DATA__;
     const store = createStore(initialData);
-
+    
     return (
         <Provider {...store}>
             <Router location={props.location} context={{}}>

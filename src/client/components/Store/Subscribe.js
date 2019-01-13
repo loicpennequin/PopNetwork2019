@@ -10,9 +10,9 @@ const subscribe = mapStoreToProps => Wrapped => {
                 const mapped =
                     mapStoreToProps && typeof mapStoreToProps === 'function'
                         ? {
-                              ...mapStoreToProps(store),
+                            ...mapStoreToProps(store),
                               setState: store.setstate
-                          }
+                        }
                         : store;
                 return <Wrapped {...mapped} {...props} />;
             }}

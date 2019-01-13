@@ -90,11 +90,11 @@ class ReactRenderer {
     }
 
     async _prefetch(key, req) {
-        const noop = () => ({});
-        const initialData = {
-            authenticated: AuthService.get('local').isLoggedIn(req)
+        return {
+            authenticated: AuthService.get('local').isLoggedIn(req),
+            needPrefetch: false,
+            ...(await prefetcher[key](req))
         };
-        return { ...initialData, ...(await prefetcher[key](req)) };
     }
 
     _getAssets({ webpackStats, fs }) {

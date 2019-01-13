@@ -25,11 +25,10 @@ class RESTController {
      * @param  {Object} query = {} the query parameters from the url
      * @return {Object} the fetched rows and metadatas concerning pagination in JSON format
      */
-    async findAll(query = {}) {
-        logger.info('RESTController.findAll()');
+    async findAll(query = {}, options) {
         return await this.model
             .forge()
-            .findAll({ ...query, ...this.options.findAll });
+            .findAll({ ...query, ...this.options.findAll, ...options });
     }
 
     /**
@@ -39,7 +38,6 @@ class RESTController {
      * @return {Object} the fetched row
      */
     async findById(id, options) {
-        logger.info('RESTController.findById()');
         return await this.model
             .forge()
             .findById(id, this._aggregateOptions('findById', options));
@@ -52,7 +50,6 @@ class RESTController {
      * @return {type} the fetched row
      */
     async findOne(filter, options) {
-        logger.info('RESTController.findOne()');
         return await this.model
             .forge()
             .findOne(filter, this._aggregateOptions('findOne', options));
@@ -64,9 +61,8 @@ class RESTController {
      * @param  {Object} body = {} the model data
      * @return {Object} the created Model fields
      */
-    async create(body = {}) {
-        logger.info('RESTController.create()');
-        return await this.model.forge(body).create(this.options.create);
+    async create(body = {}, options) {
+        return await this.model.forge(body).create(this._aggregateOptions('create', options));
     }
 
     /**
@@ -75,9 +71,8 @@ class RESTController {
      * @param  {Number} id
      * @return {Object} empty model
      */
-    async destroy(id) {
-        logger.info('RESTController.destroy()');
-        return await this.model.forge({ id }).destroy(this.options.delete);
+    async destroy(id, options) {
+        return await this.model.forge({ id }).destroy(this._aggregateOptions('delete', options));
     }
 
     /**
@@ -87,9 +82,8 @@ class RESTController {
      * @param  {Object} body updated model data
      * @return {Objec t} the updated model information
      */
-    async update(id, body) {
-        logger.info('RESTController.update()');
-        return await this.model.forge({ id }).update(body, this.options.update);
+    async update(id, body, options) {
+        return await this.model.forge({ id }).update(body, this._aggregateOptions('update', options));
     }
 
     _aggregateOptions(key, options) {
