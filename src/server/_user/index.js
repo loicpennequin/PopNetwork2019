@@ -47,6 +47,27 @@ const controller = {
                 )
                 .map(_getFriendFromRequest)
         });
+    },
+    findById: async id => {
+        const _getFriendFromRequest = request =>
+            request.sender_id === parseInt(id)
+                ? request.sendee
+                : request.sender;
+        const user = await RESTService.get('User')
+            .model.forge()
+            .findById(id);
+        const friendRequests = await RESTService.get('Friendship').getFriends(
+            user.id
+        );
+        return Object.assign(user, {
+            friends: friendRequests
+                .filter(
+                    f =>
+                        f.status ===
+                        cfg.ENUMS.FRIENDSHIP_REQUESTS_STATUS.ACCEPTED
+                )
+                .map(_getFriendFromRequest)
+        });
     }
 };
 
