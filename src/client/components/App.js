@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { hot } from 'react-hot-loader/root';
-import Loadable from 'react-loadable';
-import { Provider } from 'daria-store';
-import { BrowserRouter, StaticRouter, Link } from 'react-router-dom';
+import { Provider, useStore } from 'daria-store';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { createStore } from './../store';
 import AppRoutes from 'components/Routes/AppRoutes.js';
 import pages from './../pages';
+import { PrivateLayout, PublicLayout } from './../layouts';
 
 if (!__IS_BROWSER__) {
     require('source-map-support').install();
@@ -18,15 +18,32 @@ const App = props => {
         ? props.initialData
         : window.__INITIAL_DATA__;
     const store = createStore(initialData);
-    
+
+
     return (
         <Provider {...store}>
             <Router location={props.location} context={{}}>
-                <AppRoutes />
+                <Layout/>
             </Router>
         </Provider>
     );
 };
+
+const Layout = () => {
+    const { authenticated } = useStore(mapStateToProps);
+    const ActiveLayout = authenticated ? PrivateLayout : PublicLayout;
+    return (
+        <ActiveLayout>
+            <AppRoutes/>
+        </ActiveLayout>
+    );
+};
+function mapStateToProps(store) {
+    return {
+        authenticated: store.authenticated
+    };
+}
+
 export default hot(App);
 
 export { pages };
