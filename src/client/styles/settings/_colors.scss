@@ -1,4 +1,4 @@
-$color-primary: hsla(214, 12%, 25%, 1);
+$color-primary: hsla(237, 12%, 18%, 1);
 $color-primary-invert: findColorInvert($color-primary);
 $color-primary-light: lighten($color-primary, 10%);
 $color-primary-lighter: lighten($color-primary, 25%);
@@ -6,12 +6,19 @@ $color-primary-dark: darken($color-primary, 10%);
 $color-primary-darker: darken($color-primary, 25%);
 $color-primary-half: transparentize($color-primary, 0.5);
 
-$color-secondary: color(lightblue-l-1);
+$color-secondary: hsl(317, 75%, 63%);
 $color-secondary-light: lighten($color-secondary, 10%);
 $color-secondary-lighter: lighten($color-secondary, 25%);
 $color-secondary-dark: darken($color-secondary, 10%);
 $color-secondary-darker: darken($color-secondary, 25%);
 $color-secondary-half: transparentize($color-secondary, 0.5);
+
+$color-accent: hsl(237, 70%, 55%);
+$color-accent-light: lighten($color-accent, 10%);
+$color-accent-lighter: lighten($color-accent, 25%);
+$color-accent-dark: darken($color-accent, 10%);
+$color-accent-darker: darken($color-accent, 25%);
+$color-accent-half: transparentize($color-accent, 0.5);
 
 $color-black: color(black-l-1);
 $color-gray-1: color(grey-d-8);

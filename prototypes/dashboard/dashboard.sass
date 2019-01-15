@@ -1,0 +1,26 @@
+@import "./../../src/client/styles/app.sass"
+
+$navbar-height: 60px
+
+\:global(.navbar)
+    position: fixed
+    height: $navbar-height
+    background-color: $color-primary
+    width: 100vw
+
+\:global(.dashboard_layout)
+    min-height: 100vh
+    display: grid
+    grid-template-columns: 250px 1fr 300px
+    padding-top: $navbar-height
+    grid-gap: $spacing-sm
+    background: radial-gradient(circle at top left, $color-accent-half, transparent), radial-gradient(circle at bottom left, $color-primary-lighter, transparent), radial-gradient(circle at top right, $color-secondary-half, transparent)
+
+\:global(.friends-list)
+    background-color: transparentize($color-gray-5, 0.55)
+
+\:global(.dashboard_menu)
+    background-color: transparentize($color-gray-5, 0.55)
+
+\:global(.dashboard_feed)
+    background-color: transparentize($color-gray-5, 0.95)

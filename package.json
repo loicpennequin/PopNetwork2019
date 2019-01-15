@@ -13,7 +13,9 @@
         "build:db": "knex migrate:latest",
         "presetup": "npm install prompt && node tools/scripts/setup.js",
         "setup": "npm install && npm build:db",
-        "post-setup": "npm run dev"
+        "post-setup": "npm run dev",
+        "prototype": "webpack-dev-server --config ./prototypes/webpack.config.js --open",
+        "prototype:build": "webpack --config ./prototypes/webpack.config.js"
     },
     "keywords": [],
     "author": "",
@@ -36,6 +38,7 @@
         "express-session": "^1.15.6",
         "helmet": "^3.15.0",
         "hoist-non-react-statics": "^3.2.1",
+        "html-webpack-plugin": "^3.2.0",
         "informed": "^1.10.12",
         "is-object": "^1.0.1",
         "knex": "^0.16.3",
@@ -52,6 +55,7 @@
         "react-router-dom": "^4.3.1",
         "socket.io": "^2.2.0",
         "socket.io-client": "^2.2.0",
+        "webpack-dev-server": "^3.1.14",
         "winston": "^3.1.0",
         "wretch": "^1.4.2",
         "wretch-middlewares": "^0.1.8"
